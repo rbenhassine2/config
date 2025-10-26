@@ -1,0 +1,14 @@
+exec --no-startup-id firefox
+exec --no-startup-id google-chrome
+exec --no-startup-id chromium
+
+
+assign [class="firefox_firefox"] 3
+assign [class="Google-chrome"] 4
+assign [class="Chromium"] 5
+assign [class="Netsoft-com.netsoft.hubstaff"] 10
+
+gaps inner 15px
+
+
+bindsym $mod+slash exec scrot -s ~/Pictures/screenshot_%Y-%m-%d_%H-%M-%S.png
