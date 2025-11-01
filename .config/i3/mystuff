@@ -1,11 +1,13 @@
 exec --no-startup-id firefox
 exec --no-startup-id google-chrome
 exec --no-startup-id chromium
+exec --no-startup-id brave-browser
 
 
 assign [class="firefox_firefox"] 3
 assign [class="Google-chrome"] 4
 assign [class="Chromium"] 5
+assign [class="Brave-browser"] 6
 assign [class="Netsoft-com.netsoft.hubstaff"] 10
 
 gaps inner 15px

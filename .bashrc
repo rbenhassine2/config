@@ -222,3 +222,6 @@ fi
 
 
 bind 'set completion-ignore-case on'
+
+# opencode
+export PATH=/home/rbenhassine/.opencode/bin:$PATH
