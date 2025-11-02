@@ -4,7 +4,7 @@ exec --no-startup-id chromium
 exec --no-startup-id brave-browser
 
 
-assign [class="firefox_firefox"] 3
+assign [class="firefox"] 3
 assign [class="Google-chrome"] 4
 assign [class="Chromium"] 5
 assign [class="Brave-browser"] 6
