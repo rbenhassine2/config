@@ -14,3 +14,6 @@ gaps inner 15px
 
 
 bindsym $mod+slash exec scrot -s ~/Pictures/screenshot_%Y-%m-%d_%H-%M-%S.png
+
+bindsym $mod+o exec thunar
+bindsym $mod+Shift+p exec sudo shutdown

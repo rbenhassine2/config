@@ -1,11 +1,13 @@
+
+
 #generic aliases
 alias acpy='source .venv/bin/activate'
 alias vacpy='source venv/bin/activate'
 
 #ssh aliases
-alias srv_odoo='ssh -i ~/Documents/sshkeys/stg_hq ubuntu@198.46.86.181'
-alias rbh_srv_odoo='ssh -i ~/.ssh/odoo_srv_raouf_key 'raouf@198.46.86.181''
-alias ec2_sf_utils='ssh -i ~/.ssh/id_ed25519 ubuntu@3.84.121.175'
+alias srv_odoo='ssh -i ~/docs/sshkeys/stg_hq ubuntu@$IP_ODOO_SRV'
+alias rbh_srv_odoo='ssh -i ~/.ssh/odoo_srv_raouf_key raouf@$IP_ODOO_SRV'
+alias ec2_sf_utils='ssh -i ~/.ssh/id_ed25519 ubuntu@$IP_SF_UTILS'
 
 #git aliases
 alias gst='git status'
