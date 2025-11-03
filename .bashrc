@@ -229,3 +229,4 @@ bind 'set completion-ignore-case on'
 # opencode
 export PATH=/home/rbenhassine/.opencode/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
+unalias tree
