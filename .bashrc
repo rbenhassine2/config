@@ -102,6 +102,8 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if [ -f ~/.config/me/ips ]; then
   . ~/.config/me/ips
+else 
+  echo "~/.config/me/ips does not exist. SSH aliases will not work."
 fi
 
 if [ -f ~/.bash_aliases ]; then
