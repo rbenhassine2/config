@@ -1,5 +1,5 @@
 # Start PolicyKit authentication agent
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
 
 
 exec --no-startup-id firefox
@@ -14,8 +14,6 @@ assign [class="Netsoft-com.netsoft.hubstaff"] 10
 
 gaps inner 15px
 
-
 bindsym $mod+slash exec scrot -s ~/Pictures/screenshot_%Y-%m-%d_%H-%M-%S.png
-
 bindsym $mod+o exec thunar
 bindsym $mod+Shift+p exec sudo shutdown

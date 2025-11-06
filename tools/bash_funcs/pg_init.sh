@@ -29,6 +29,12 @@ work_mem = 6GB
 maintenance_work_mem = 6GB
 vacuum_buffer_usage_limit = 2GB
 vacuum_buffer_usage_limit = 512MB
+log_destination = 'stderr'
+logging_collector = on
+# Store logs in the 'log' subdirectory of the data directory
+log_directory = 'log'
+log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
+log_statement = 'all'
 EOF
     pg_start
 }
