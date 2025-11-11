@@ -18,6 +18,8 @@ alias gsw='git switch'
 alias gswc='git switch -c'
 alias gco='git checkout'
 alias gba='git branch -a'
+alias grv='git remote -v'
+alias gra='git remote -a'
 
 #systemctl aliases
 alias sc-start='sudo systemctl start'
