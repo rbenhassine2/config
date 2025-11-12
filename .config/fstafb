@@ -1,0 +1,23 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/nvme0n1p2
+UUID=128c9a55-ecab-4866-a606-da5042b93ff2	/         	ext4      	rw,relatime	0 1
+
+# /dev/nvme0n1p1
+UUID=1076-08E5      	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro	0 2
+
+
+# my partitions
+UUID="5058ca1b-5b4a-4886-9cbe-0a358d9a68c8" /mnt/ip-01  ext4  defaults,noatime,nodiratime,users 0  2
+UUID="d3777735-de5a-4e97-91c7-d7edeb8eaf92" /mnt/ip-02  ext4  defaults,noatime,nodiratime,users 0  2
+
+#UUID="5997226A0844DD5C" /mnt/ad-01  ntfs-3g  defaults,users,umask=000  0  0
+#UUID="01084AE674F37FDB" /mnt/ad-02  ntfs-3g  defaults,users,umask=000  0  0
+#UUID="3A112C3B3AEA1A82" /mnt/ad-03  ntfs-3g  defaults,users,umask=000  0  0
+
+
+#UUID="7296c2e1-046a-44b1-81db-dd46675ec12b" /mnt/sg-01 ext4 defaults,noatime,nodiratime,users 0 0
+#UUID="5d101423-15b9-45d1-a25f-dfa65bc73548" /mnt/sg-02 ext4 defaults,noatime,nodiratime,users 0 0
+#UUID="9ed32feb-4249-4691-af13-964b74bb6bc2" /mnt/sg-03 ext4 defaults,noatime,nodiratime,users 0 0
