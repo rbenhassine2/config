@@ -102,7 +102,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if [ -f ~/.config/me/ips ]; then
   . ~/.config/me/ips
-else 
+else
   echo "~/.config/me/ips does not exist. SSH aliases will not work."
 fi
 
@@ -212,7 +212,6 @@ if [ -d "/usr/local/go/bin" ]; then
   export PATH="/usr/local/go/bin:$PATH"
 fi
 
-
 if [ -d "/usr/lib/postgresql/18/bin" ]; then
   PATH="/usr/lib/postgresql/18/bin:$PATH"
 fi
@@ -225,13 +224,11 @@ if [ -d "$HOME/tools/bash_funcs" ]; then
   done
 fi
 
-
 bind 'set completion-ignore-case on'
 
 # opencode
 export PATH=/home/rbenhassine/.opencode/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
-
 
 # Add debuginfod download url
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
@@ -240,3 +237,6 @@ export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
+# Make shims work
+export PATH="$HOME/.asdf/shims:$PATH"
+export PATH="$HOME/.asdf/bin:$PATH"
