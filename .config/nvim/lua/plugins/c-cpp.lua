@@ -29,17 +29,3 @@ require("lspconfig").clangd.setup({
     "--query-driver=/usr/bin/**/clang*", -- helps on some systems
   },
 })
-
-return {
-  -- Disable pyright
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      servers = {
-        pyright = false,
-        ruff = false,
-        ruff_lsp = false,
-      },
-    },
-  },
-}
