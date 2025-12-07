@@ -40,4 +40,6 @@ alias pg_status='pg_ctl status -D ~/pg/server -l ~/pg/postgresql.log'
 #odoo aliases
 alias odoo-server='./odoo17/odoo-bin -c ./odoo17/odoo.conf --dev xml'
 alias odoo-shell='./odoo17/odoo-bin shell -c ./odoo17/odoo.conf'
-alias config='/usr/bin/git --git-dir=/home/rbenhassine/.cfg/ --work-tree=/home/rbenhassine'
+
+#dotfiles
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
