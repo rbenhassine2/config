@@ -1,5 +1,5 @@
-
-
+#docker
+alias docker='sudo docker'
 #generic aliases
 alias acpy='source .venv/bin/activate'
 alias vacpy='source venv/bin/activate'
@@ -7,7 +7,8 @@ alias vacpy='source venv/bin/activate'
 #ssh aliases
 alias srv_odoo='ssh -i ~/docs/sshkeys/stg_hq ubuntu@$IP_ODOO_SRV'
 alias rbh_srv_odoo='ssh -i ~/.ssh/odoo_srv_raouf_key raouf@$IP_ODOO_SRV'
-alias ec2_sf_utils='ssh -i ~/.ssh/id_ed25519 ubuntu@$IP_SF_UTILS'
+alias ec2_sf_utils='ssh -i ~/docs/sshkeys/ec2_sf_utils ubuntu@$IP_SF_UTILS'
+alias ec2_sf_utils_raouf='ssh -i ~/docs/sshkeys/ec2_sf_utils raouf@$IP_SF_UTILS'
 
 #git aliases
 alias gst='git status'

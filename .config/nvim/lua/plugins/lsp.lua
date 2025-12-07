@@ -36,7 +36,18 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        pyright = false,
+        ty = false,
+        pyrefly = false,
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                diagnosticMode = "workspace",
+                autoImportCompletions = true,
+              },
+            },
+          },
+        },
         ruff = false,
         ruff_lsp = false,
       },

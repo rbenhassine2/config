@@ -11,3 +11,13 @@
 -- vim.keymap.set("n", "<A-S-j>", "<cmd>resize -10<cr>", { desc = "Decrease Window Height" })
 -- vim.keymap.set("n", "<A-S-h>", "<cmd>vertical resize -10<cr>", { desc = "Decrease Window Width" })
 -- vim.keymap.set("n", "<A-S-l>", "<cmd>vertical resize +10<cr>", { desc = "Increase Window Width" })
+
+vim.keymap.set("n", "<leader>cp", function()
+  vim.fn.setreg("+", vim.fn.expand("%:"))
+  vim.notify("Copied: " .. vim.fn.expand("%:"))
+end, { desc = "Copy relative file path" })
+
+vim.keymap.set("n", "<leader>cP", function()
+  vim.fn.setreg("+", vim.fn.expand("%:p"))
+  vim.notify("Copied: " .. vim.fn.expand("%:p"))
+end, { desc = "Copy full file path" })

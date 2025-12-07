@@ -240,3 +240,7 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Make shims work
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="$HOME/.asdf/bin:$PATH"
+
+[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
+[ -s ~/.luaver/completions/luaver.bash ] && . ~/.luaver/completions/luaver.bash
+
