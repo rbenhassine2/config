@@ -244,3 +244,6 @@ export PATH="$HOME/.asdf/bin:$PATH"
 [ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
 [ -s ~/.luaver/completions/luaver.bash ] && . ~/.luaver/completions/luaver.bash
 
+
+# opencode
+export PATH=/home/atp/.opencode/bin:$PATH

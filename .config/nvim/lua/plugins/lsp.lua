@@ -37,18 +37,9 @@ return {
     opts = {
       servers = {
         ty = false,
-        pyrefly = false,
-        pyright = {
-          settings = {
-            python = {
-              analysis = {
-                diagnosticMode = "workspace",
-                autoImportCompletions = true,
-              },
-            },
-          },
-        },
-        ruff = false,
+        pyrefly = true,
+        pyright = false,
+        ruff = true,
         ruff_lsp = false,
       },
     },
