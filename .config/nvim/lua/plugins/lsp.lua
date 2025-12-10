@@ -37,7 +37,14 @@ return {
     opts = {
       servers = {
         ty = false,
-        pyrefly = true,
+        pyrefly = {
+          cmd = { "uv", "run", "pyrefly", "lsp" },
+          display_type_errors = "force-on",
+          pythonPath = vim.fn.expand("$VIRTUAL_ENV/bin/python"),
+          typeCheckingMode = "standard",
+          useLibraryCodeForTypes = true,
+          diagnosticMode = "workspace",
+        },
         pyright = false,
         ruff = true,
         ruff_lsp = false,

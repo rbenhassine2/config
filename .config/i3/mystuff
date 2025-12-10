@@ -11,7 +11,7 @@ assign [class="Google-chrome"] 4
 assign [class="Brave-browser"] 5
 assign [class="Netsoft-com.netsoft.hubstaff"] 10
 
-gaps inner 15px
+gaps inner 5px
 
 bindsym $mod+slash exec scrot -s ~/Pictures/screenshot_%Y-%m-%d_%H-%M-%S.png
 bindsym $mod+o exec thunar
