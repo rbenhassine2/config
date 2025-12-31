@@ -3,7 +3,9 @@
 -- Add any additional options here
 
 vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldenable = true
 vim.opt.foldlevelstart = 99 -- Start with everything unfolded; fold manually or via command
-vim.opt.foldnestmax = 3 -- Limit nesting to avoid over-folding
+vim.opt.foldnestmax = 5 -- Limit nesting to avoid over-folding
+
+vim.g.lazyvim_python_lsp = "pyright"

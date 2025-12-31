@@ -1,53 +1,76 @@
-require("lspconfig").clangd.setup({
-  capabilities = vim.lsp.protocol.make_client_capabilities(),
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--clang-tidy=false", -- optional, CPython triggers too many warnings
-    "--header-insertion=never", -- we don’t want iwyu suggestions
-    "--completion-style=detailed",
-    "--function-arg-placeholders=true",
-    "--fallback-style=llvm",
-    "--all-scopes-completion",
-    "--cross-file-rename",
-    "--pch-storage=memory", -- faster for huge codebases
-    "--enable-config", -- read .clangd files
-    "--offset-encoding=utf-16", -- fixes some offset bugs with nvim
-    "--log=verbose",
-  },
-  init_options = {
-    clangdFileStatus = true,
-    usePlaceholders = true,
-    completeUnimported = true,
-  },
-  root_dir = function(fname)
-    local lspconfig_util = require("lspconfig.util")
-    return lspconfig_util.root_pattern(".git")(fname)
-  end,
-  filetypes = { "c", "cpp", "objc", "objcpp" },
-  extra_args = {
-    "--query-driver=/usr/bin/**/clang*", -- helps on some systems
-  },
-})
+-- Function to get Python path from venv
+local function get_python_path()
+  -- Use the activated venv's python if available
+  local venv_path = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+  if venv_path then
+    return venv_path .. "/bin/python"
+  end
+
+  -- Fallback to system python
+  return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
+end
 
 return {
-  -- Disable pyright
   {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
-        ty = false,
-        pyrefly = {
-          cmd = { "uv", "run", "pyrefly", "lsp" },
-          display_type_errors = "force-on",
-          pythonPath = vim.fn.expand("$VIRTUAL_ENV/bin/python"),
-          typeCheckingMode = "standard",
-          useLibraryCodeForTypes = true,
-          diagnosticMode = "workspace",
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy=false",
+            "--header-insertion=never",
+            "--completion-style=detailed",
+            "--function-arg-placeholders=true",
+            "--fallback-style=llvm",
+            "--all-scopes-completion",
+            "--cross-file-rename",
+            "--pch-storage=memory",
+            "--enable-config",
+            "--offset-encoding=utf-16",
+            "--log=verbose",
+          },
+          init_options = {
+            clangdFileStatus = true,
+            usePlaceholders = true,
+            completeUnimported = true,
+          },
+          filetypes = { "c", "cpp", "objc", "objcpp" },
+          extra_args = {
+            "--query-driver=/usr/bin/**/clang*",
+          },
         },
-        pyright = false,
-        ruff = true,
+        pyright = {
+          python = {
+            pythonPath = "python",
+          },
+          analysis = {
+            typeCheckingMode = "standard", -- or "strict"
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+          },
+        },
+        pyrefly = false,
+        ruff = {
+          init_options = {
+            settings = {
+              logLevel = "error", -- Reduce noise
+            },
+          },
+          -- Defer non-linting features to Pyrefly
+          capabilities = {
+            hoverProvider = false,
+            renameProvider = false, -- Disable Ruff's rename (redundant anyway)
+          },
+        },
         ruff_lsp = false,
+        erlang_ls = false,
+        erlangls = false,
+        ty = false,
+        rubocop = false,
+        ruby_lsp = false,
       },
     },
   },

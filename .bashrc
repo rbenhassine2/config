@@ -216,6 +216,10 @@ if [ -d "/usr/lib/postgresql/18/bin" ]; then
   PATH="/usr/lib/postgresql/18/bin:$PATH"
 fi
 
+if [ -d "$HOME/tools/cmake-4.2.1-linux-x86_64/bin" ]; then
+  PATH="$HOME/tools/cmake-4.2.1-linux-x86_64/bin:$PATH"
+fi
+
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
     if [ -f "$file" ] && [ -r "$file" ]; then
