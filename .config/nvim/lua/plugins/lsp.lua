@@ -52,23 +52,25 @@ return {
             diagnosticMode = "workspace",
           },
         },
+        -- pyright = false,
         pyrefly = false,
-        ruff = {
-          init_options = {
-            settings = {
-              logLevel = "error", -- Reduce noise
-            },
-          },
-          -- Defer non-linting features to Pyrefly
-          capabilities = {
-            hoverProvider = false,
-            renameProvider = false, -- Disable Ruff's rename (redundant anyway)
-          },
-        },
+        ty = false,
+        -- ruff = {
+        -- init_options = {
+        -- settings = {
+        -- logLevel = "error", -- Reduce noise
+        -- },
+        -- },
+        -- Defer non-linting features to Pyrefly
+        -- capabilities = {
+        -- hoverProvider = false,
+        -- renameProvider = false, -- Disable Ruff's rename (redundant anyway)
+        -- },
+        -- },
+        ruff = false,
         ruff_lsp = false,
         erlang_ls = false,
         erlangls = false,
-        ty = false,
         rubocop = false,
         ruby_lsp = false,
       },
