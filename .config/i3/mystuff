@@ -5,8 +5,8 @@ exec --no-startup-id google-chrome-stable
 exec --no-startup-id brave-browser
 
 
-assign [class="Google-chrome"] 4
-assign [class="Brave-browser"] 5
+assign [class="Google-chrome"] 2
+assign [class="Brave-browser"] 1
 assign [class="Netsoft-com.netsoft.hubstaff"] 10
 
 gaps inner 5px

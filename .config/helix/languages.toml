@@ -1,0 +1,12 @@
+[[language]]
+name = "python"
+auto-format = true
+language-servers = ["pyrefly"]
+
+[language.formatter]
+command = "ruff"
+args = ["format", "-"]
+
+[language-server.pyrefly]
+command = "pyrefly"
+args = ["lsp"]

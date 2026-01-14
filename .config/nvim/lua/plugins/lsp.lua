@@ -1,15 +1,3 @@
--- Function to get Python path from venv
-local function get_python_path()
-  -- Use the activated venv's python if available
-  local venv_path = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
-  if venv_path then
-    return venv_path .. "/bin/python"
-  end
-
-  -- Fallback to system python
-  return vim.fn.exepath("python3") or vim.fn.exepath("python") or "python"
-end
-
 return {
   {
     "neovim/nvim-lspconfig",
@@ -38,31 +26,39 @@ return {
             "--query-driver=/usr/bin/**/clang*",
           },
         },
-        pyright = {
-          python = {
-            pythonPath = "python",
-          },
-          analysis = {
-            typeCheckingMode = "standard", -- or "strict"
-            autoSearchPaths = true,
-            useLibraryCodeForTypes = true,
-            diagnosticMode = "workspace",
-          },
-        },
-        -- pyright = false,
-        pyrefly = false,
+        -- pyright = {
+        --   python = {
+        --     pythonPath = "python",
+        --   },
+        --   analysis = {
+        --     typeCheckingMode = "standard", -- or "strict"
+        --     autoSearchPaths = true,
+        --     useLibraryCodeForTypes = true,
+        --     diagnosticMode = "workspace",
+        --   },
+        -- },
+        pyright = false,
+        -- pyrefly = {
+        --   cmd = { vim.fn.expand("~/.local/bin/pyrefly"), "lsp" }, -- global binary
+        --   filetypes = { "python" },
+        --   root_dir = function(fname)
+        --     return require("lspconfig.util").root_pattern("pyproject.toml", ".git")(fname)
+        --   end,
+        -- },
+        -- pyrefly = {},
         ty = false,
         -- ruff = {
-        -- init_options = {
-        -- settings = {
-        -- logLevel = "error", -- Reduce noise
-        -- },
-        -- },
-        -- Defer non-linting features to Pyrefly
-        -- capabilities = {
-        -- hoverProvider = false,
-        -- renameProvider = false, -- Disable Ruff's rename (redundant anyway)
-        -- },
+        --   init_options = {
+        --     settings = {
+        --       logLevel = "error", -- Reduce noise
+        --       config = vim.fn.getcwd() .. "/pyproject.toml",
+        --     },
+        --   },
+        --   -- Defer non-linting features to Pyrefly
+        --   capabilities = {
+        --     hoverProvider = false,
+        --     renameProvider = false, -- Disable Ruff's rename (redundant anyway)
+        --   },
         -- },
         ruff = false,
         ruff_lsp = false,
@@ -71,6 +67,28 @@ return {
         rubocop = false,
         ruby_lsp = false,
         fsautocomplete = false,
+      },
+      setup = {
+        pyrefly = function(_, _)
+          -- Register pyrefly using Mason's binary path
+          local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/pyrefly"
+
+          vim.lsp.config("pyrefly", {
+            cmd = { mason_bin, "lsp" },
+            filetypes = { "python" },
+            root_dir = function(fname)
+              return require("lspconfig.util").root_pattern("pyproject.toml", ".git")(fname)
+            end,
+            settings = {
+              pyrefly = {
+                displayTypeErrors = "default",
+              },
+            },
+          })
+
+          vim.lsp.enable("pyrefly")
+          return true -- Prevent lspconfig from managing this server
+        end,
       },
     },
   },
