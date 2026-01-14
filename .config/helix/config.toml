@@ -2,6 +2,7 @@
 line-number = "absolute"
 mouse = false
 true-color=true
+bufferline="always"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -14,3 +15,9 @@ hidden = false
 [keys.normal]
 A-down = ["extend_to_line_bounds", "delete_selection", "paste_after"]   # Move line(s) down
 A-up   = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"] # Move line(s) up
+C-left = "jump_view_left"
+C-right = "jump_view_right"
+C-down = "jump_view_down"
+C-up = "jump_view_up"
+S-left = "goto_next_buffer"
+S-right = "goto_previous_buffer"
