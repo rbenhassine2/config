@@ -38,57 +38,29 @@ return {
         --   },
         -- },
         pyright = false,
-        -- pyrefly = {
-        --   cmd = { vim.fn.expand("~/.local/bin/pyrefly"), "lsp" }, -- global binary
-        --   filetypes = { "python" },
-        --   root_dir = function(fname)
-        --     return require("lspconfig.util").root_pattern("pyproject.toml", ".git")(fname)
-        --   end,
-        -- },
-        -- pyrefly = {},
+        pyrefly = {
+          cmd = { vim.fn.expand("~/.local/bin/pyrefly"), "lsp" },
+          settings = {
+            pyrefly = {
+              displayTypeErrors = "default",
+            },
+          },
+        },
+        ruff = {
+          cmd = { vim.fn.expand("~/.local/bin/ruff"), "server" },
+          init_options = {
+            settings = {
+              logLevel = "error",
+            },
+          },
+        },
         ty = false,
-        -- ruff = {
-        --   init_options = {
-        --     settings = {
-        --       logLevel = "error", -- Reduce noise
-        --       config = vim.fn.getcwd() .. "/pyproject.toml",
-        --     },
-        --   },
-        --   -- Defer non-linting features to Pyrefly
-        --   capabilities = {
-        --     hoverProvider = false,
-        --     renameProvider = false, -- Disable Ruff's rename (redundant anyway)
-        --   },
-        -- },
-        ruff = false,
         ruff_lsp = false,
         erlang_ls = false,
         erlangls = false,
         rubocop = false,
         ruby_lsp = false,
         fsautocomplete = false,
-      },
-      setup = {
-        pyrefly = function(_, _)
-          -- Register pyrefly using Mason's binary path
-          local mason_bin = vim.fn.stdpath("data") .. "/mason/bin/pyrefly"
-
-          vim.lsp.config("pyrefly", {
-            cmd = { mason_bin, "lsp" },
-            filetypes = { "python" },
-            root_dir = function(fname)
-              return require("lspconfig.util").root_pattern("pyproject.toml", ".git")(fname)
-            end,
-            settings = {
-              pyrefly = {
-                displayTypeErrors = "default",
-              },
-            },
-          })
-
-          vim.lsp.enable("pyrefly")
-          return true -- Prevent lspconfig from managing this server
-        end,
       },
     },
   },
