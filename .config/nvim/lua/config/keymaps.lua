@@ -19,3 +19,12 @@ vim.keymap.set("n", "<leader>zd", "<cmd>CMakeDebug<cr>", { desc = "CMake Debug" 
 vim.keymap.set("n", "<leader>zg", "<cmd>CMakeGenerate<cr>", { desc = "CMake Generate" })
 vim.keymap.set("n", "<leader>zt", "<cmd>CMakeRunTest<cr>", { desc = "CMake Test" })
 vim.keymap.set("n", "<leader>zc", "<cmd>CMakeClean<cr>", { desc = "CMake Clean" })
+
+vim.keymap.set("n", "gs", function()
+  vim.go.operatorfunc = "v:lua.snake_case_op"
+  return "g@"
+end, { expr = true })
+
+function snake_case_op(type)
+  vim.cmd("'[,']s/\\v([a-z0-9])([A-Z])/\\1_\\l\\2/g")
+end

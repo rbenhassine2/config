@@ -42,7 +42,7 @@ return {
           cmd = { vim.fn.expand("~/.local/bin/pyrefly"), "lsp" },
           settings = {
             pyrefly = {
-              displayTypeErrors = "default",
+              displayTypeErrors = "all",
             },
           },
         },
