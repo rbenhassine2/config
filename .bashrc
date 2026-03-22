@@ -251,3 +251,4 @@ export PATH="$HOME/.asdf/bin:$PATH"
 
 # opencode
 export PATH=/home/atp/.opencode/bin:$PATH
+export PATH=$PATH:/opt/nvim-linux-x86_64/bin
