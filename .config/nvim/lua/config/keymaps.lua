@@ -28,3 +28,7 @@ end, { expr = true })
 function snake_case_op(type)
   vim.cmd("'[,']s/\\v([a-z0-9])([A-Z])/\\1_\\l\\2/g")
 end
+
+-- buffers
+vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
+vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next Buffer" })

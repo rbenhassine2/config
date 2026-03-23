@@ -230,25 +230,13 @@ fi
 
 bind 'set completion-ignore-case on'
 
-# opencode
-export PATH=/home/rbenhassine/.opencode/bin:$PATH
 export PATH="$HOME/.local/bin:$PATH"
-
-# Add debuginfod download url
-export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# Make shims work
-export PATH="$HOME/.asdf/shims:$PATH"
-export PATH="$HOME/.asdf/bin:$PATH"
 
-[ -s ~/.luaver/luaver ] && . ~/.luaver/luaver
-[ -s ~/.luaver/completions/luaver.bash ] && . ~/.luaver/completions/luaver.bash
-
-
-# opencode
-export PATH=/home/atp/.opencode/bin:$PATH
 export PATH=$PATH:/opt/nvim-linux-x86_64/bin
+
+export PATH=$PATH:/usr/lib/postgresql/15/bin
