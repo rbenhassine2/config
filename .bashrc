@@ -208,17 +208,15 @@ export ZVM_INSTALL="$HOME/.zvm/self"
 export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL/"
 
-if [ -d "/usr/local/go/bin" ]; then
-  export PATH="/usr/local/go/bin:$PATH"
-fi
+export PATH="$HOME/tools/cmake-4.2.1-linux-x86_64/bin:$PATH"
 
-if [ -d "/usr/lib/postgresql/18/bin" ]; then
-  PATH="/usr/lib/postgresql/18/bin:$PATH"
-fi
+export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:/opt/nvim-linux-x86_64/bin
 
-if [ -d "$HOME/tools/cmake-4.2.1-linux-x86_64/bin" ]; then
-  PATH="$HOME/tools/cmake-4.2.1-linux-x86_64/bin:$PATH"
-fi
+export PATH=$PATH:$HOME/.opencode/bin
+export PATH=$PATH:/usr/local/go/bin
+
 
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
@@ -228,15 +226,7 @@ if [ -d "$HOME/tools/bash_funcs" ]; then
   done
 fi
 
-if [ -d "$HOME/go/bin" ]; then
-  PATH="$HOME/go/bin:$PATH"
-fi
 
 bind 'set completion-ignore-case on'
 
-export PATH="$HOME/.local/bin:$PATH"
 
-export PATH=$PATH:/opt/nvim-linux-x86_64/bin
-
-# opencode
-export PATH=$HOME/.opencode/bin:$PATH
