@@ -3,4 +3,3 @@
 -- Add any additional options here
 
 vim.g.lazyvim_python_lsp = "pyrefly"
-vim.g.autoformat = true

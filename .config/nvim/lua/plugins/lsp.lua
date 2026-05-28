@@ -4,17 +4,6 @@ return {
     opts = {
       servers = {
 
-        -- pyright = {
-        --   python = {
-        --     pythonPath = "python",
-        --   },
-        --   analysis = {
-        --     typeCheckingMode = "standard", -- or "strict"
-        --     autoSearchPaths = true,
-        --     useLibraryCodeForTypes = true,
-        --     diagnosticMode = "workspace",
-        --   },
-        -- },
         pyright = false,
         pyrefly = {
           cmd = { vim.fn.expand("~/.local/bin/pyrefly"), "lsp" },
