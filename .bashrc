@@ -242,7 +242,5 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 export PATH=$PATH:/opt/nvim-linux-x86_64/bin
 
-export PATH=$PATH:/usr/lib/postgresql/15/bin
-
 # opencode
-export PATH=/home/atp/.opencode/bin:$PATH
+export PATH=$HOME/.opencode/bin:$PATH
