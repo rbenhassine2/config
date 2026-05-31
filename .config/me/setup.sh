@@ -1,13 +1,26 @@
 #!/usr/bin/env bash
 
-set -x
+install_incus=false
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  --install-incus)
+    install_incus=true
+    shift
+    ;;
+  *)
+    echo "Unknown option: $1"
+    exit 1
+    ;;
+  esac
+done
 
 # updgrade teh system
 sudo apt update
 sudo apt upgrade -y
 
 # install dependencies
-sudo apt install jq git curl wget gawk build-essential ca-certificates -y
+sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd -y
 
 # download and setup config.
 # Copied from https://www.atlassian.com/git/tutorials/dotfiles
@@ -75,3 +88,29 @@ curl -fL -o $ARCHIVE $URL
 sudo rm -rf /usr/local/go
 sudo tar -C /usr/local -xzf $ARCHIVE
 rm $ARCHIVE
+
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+
+export NVM_DIR="${HOME}/.nvm"
+. "$NVM_DIR/nvm.sh"
+
+nvm install --lts
+nvm alias default lts/*
+npm install -g npm@latest
+
+# Install antigrivity
+curl -fsSL https://antigravity.google/cli/install.sh | bas
+
+# Install opencode
+curl -fsSL https://opencode.ai/install | bash
+
+# Install ollama
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Install incus
+if $install_incus; then
+  sudo apt install incus
+  sudo adduser $USER incus-admin
+  newgrp incus-admin
+fi
