@@ -100,7 +100,7 @@ nvm alias default lts/*
 npm install -g npm@latest
 
 # Install antigrivity
-curl -fsSL https://antigravity.google/cli/install.sh | bas
+curl -fsSL https://antigravity.google/cli/install.sh | bash
 
 # Install opencode
 curl -fsSL https://opencode.ai/install | bash
