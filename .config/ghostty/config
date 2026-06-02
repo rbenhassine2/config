@@ -1,2 +1,5 @@
 font-family = Hurmit Nerd Font Mono
-font-size = 18
+font-size = 16
+window-decoration = none
+#theme=Phala Green Dark
+theme=Treehouse
