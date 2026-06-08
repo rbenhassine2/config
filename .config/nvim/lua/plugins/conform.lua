@@ -12,6 +12,14 @@ return {
         css = { "prettier" },
         scss = { "prettier" },
         json = { "prettier" },
+        xml = { "xmllint" },
+      },
+    },
+    formatters = {
+      xmllint = {
+        command = "xmllint",
+        args = { "--format", "-" },
+        stdin = true,
       },
     },
   },
