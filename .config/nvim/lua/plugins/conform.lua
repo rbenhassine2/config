@@ -13,6 +13,8 @@ return {
         scss = { "prettier" },
         json = { "prettier" },
         xml = { "xmllint" },
+        c = { "clang-format" },
+        cpp = { "clang-format" },
       },
     },
     formatters = {
@@ -20,6 +22,9 @@ return {
         command = "xmllint",
         args = { "--format", "-" },
         stdin = true,
+      },
+      ["clang-format"] = {
+        command = vim.fn.expand("~/tools/llvm/bin/clang-format"),
       },
     },
   },

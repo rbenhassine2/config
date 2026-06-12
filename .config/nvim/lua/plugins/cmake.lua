@@ -6,8 +6,11 @@ return {
     cmake_run_options = {},
     cmake_dap_configuration = {
       name = "cpp",
-      type = "codelldb",
+      type = "lldb",
       request = "launch",
+    },
+    cmake_compile_commands_options = {
+      action = "soft_link",
     },
   },
 }
