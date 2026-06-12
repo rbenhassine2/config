@@ -216,7 +216,7 @@ export PATH=$PATH:/opt/nvim-linux-x86_64/bin
 export PATH=$PATH:$HOME/.opencode/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/tools/cmake/bin:$PATH
-export PATH=$HOME/tools/clangd/bin:$PATH
+export PATH=$HOME/tools/llvm/bin:$PATH
 
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
