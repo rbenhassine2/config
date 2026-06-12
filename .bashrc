@@ -208,15 +208,15 @@ export ZVM_INSTALL="$HOME/.zvm/self"
 export PATH="$PATH:$HOME/.zvm/bin"
 export PATH="$PATH:$ZVM_INSTALL/"
 
-export PATH="$HOME/tools/cmake-4.2.1-linux-x86_64/bin:$PATH"
 export PATH="$PATH:/usr/lib/postgresql/18/bin"
 export PATH=$PATH:$HOME/go/bin
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/opt/nvim-linux-x86_64/bin
 
 export PATH=$PATH:$HOME/.opencode/bin
 export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/tools/cmake/bin/
+export PATH=$HOME/tools/cmake/bin:$PATH
+export PATH=$HOME/tools/clangd/bin:$PATH
 
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
