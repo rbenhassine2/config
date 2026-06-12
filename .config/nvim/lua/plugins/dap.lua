@@ -8,7 +8,7 @@ return {
         command = vim.fn.expand("~/tools/llvm/bin/lldb-dap"),
         name = "lldb",
       }
-      for _, lang in ipairs({ "c", "cpp" }) do
+      for _, lang in ipairs({ "c", "cpp", "zig" }) do
         dap.configurations[lang] = dap.configurations[lang] or {}
         table.insert(dap.configurations[lang], {
           type = "lldb",

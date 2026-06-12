@@ -37,6 +37,11 @@ return {
         ruff_lsp = false,
         fsautocomplete = false,
 
+        -- Zig Language Server via zvm
+        zls = {
+          cmd = { vim.fn.expand("~/.zvm/bin/zls") },
+        },
+
         -- TypeScript/JavaScript with React support
         ts_ls = {
           settings = {
