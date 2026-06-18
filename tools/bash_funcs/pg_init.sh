@@ -8,13 +8,13 @@ pg_init() {
 listen_addresses='localhost'
 port=45000
 max_connections=100
-unix_socket_directories='/home/$(whoami)/pg/server'
+unix_socket_directories='/home/atp/pg/server'
 dynamic_shared_memory_type=posix
 fsync=off
 synchronous_commit=off
 full_page_writes=off
-max_wal_size=1GB
-min_wal_size=80MB
+max_wal_size=48GB
+min_wal_size=4GB
 log_timezone='UTC'
 datestyle='iso,mdy'
 timezone='UTC'
@@ -23,19 +23,37 @@ lc_monetary='en_US.UTF-8'
 lc_numeric='en_US.UTF-8'
 lc_time='en_US.UTF-8'
 default_text_search_config='pg_catalog.english'
-shared_buffers = 2GB
+shared_buffers = 6GB
 temp_buffers = 256MB
-work_mem = 2GB
+work_mem = 64MB
 maintenance_work_mem = 2GB
 vacuum_buffer_usage_limit = 2GB
-vacuum_buffer_usage_limit = 512MB
 log_destination = 'stderr'
 logging_collector = on
 # Store logs in the 'log' subdirectory of the data directory
 log_directory = 'log'
 log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
 log_statement = 'all'
+checkpoint_timeout=1h
+effective_cache_size = 24GB
+wal_buffers = 64MB
+max_worker_processes = 12
+max_parallel_maintenance_workers = 6
+
+# Debugging & Logging optimizations
+log_min_duration_statement = 0
+log_line_prefix = '%m [%p] %d %u '
+
+# NVMe SSD optimizations
+random_page_cost = 1.1
+effective_io_concurrency = 200
+
+# JIT optimizations
+jit = off
+
+# Parallelism tuning
+max_parallel_workers_per_gather = 4
+max_parallel_workers = 8
 EOF
   pg_start
 }
-
