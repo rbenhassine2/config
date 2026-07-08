@@ -3,8 +3,7 @@ mp3chsplt() {
     local dir_name
     local mp3_files
     local file_num=1
-    local bitrate="46k"
-
+    
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -15,24 +14,13 @@ mp3chsplt() {
                     shift
                 else
                     echo "Error: --dir-name requires a boolean value (true or false)"
-                    echo "Usage: mp3splt [--dir-name true|false] [--bitrate <bitrate>]"
-                    return 1
-                fi
-                ;;
-            --bitrate)
-                shift
-                if [[ -n "$1" ]]; then
-                    bitrate="$1"
-                    shift
-                else
-                    echo "Error: --bitrate requires a value (e.g., 46k, 64k, 128k)"
-                    echo "Usage: mp3splt [--dir-name true|false] [--bitrate <bitrate>]"
+                    echo "Usage: mp3splt [--dir-name true|false]"
                     return 1
                 fi
                 ;;
             *)
                 echo "Unknown option: $1"
-                echo "Usage: mp3splt [--dir-name true|false] [--bitrate <bitrate>]"
+                echo "Usage: mp3splt [--dir-name true|false]"
                 return 1
                 ;;
         esac
@@ -40,7 +28,7 @@ mp3chsplt() {
 
     # Find all MP3 files in current directory, sorted by name
     mapfile -t mp3_files < <(find . -maxdepth 1 -name "*.mp3" -type f | sort -V)
-
+    
     if [[ ${#mp3_files[@]} -eq 0 ]]; then
         echo "Error: No MP3 files found in current directory"
         return 1
@@ -50,7 +38,7 @@ mp3chsplt() {
 
     # Get current directory name for output prefix
     dir_name=$(basename "$(pwd)")
-
+    
     # Determine zero-padding for file numbers
     local file_num_format
     if [[ ${#mp3_files[@]} -lt 100 ]]; then
@@ -58,21 +46,21 @@ mp3chsplt() {
     else
         file_num_format="%03d"
     fi
-
+    
     # Check if ffmpeg is available
     if ! command -v ffmpeg &> /dev/null; then
         echo "Error: ffmpeg is not installed or not in PATH"
         return 1
     fi
-
+    
     # Process each MP3 file
     for input_file in "${mp3_files[@]}"; do
-        echo "Converting $input_file to Opus (file $file_num)..."
-
+        echo "Converting $input_file to MP3 segments (file $file_num)..."
+        
         # Format file number with appropriate zero-padding
         local formatted_file_num
         printf -v formatted_file_num "$file_num_format" "$file_num"
-
+        
         # Build output filename based on flag
         local output_prefix
         if [[ "$use_dir_name" == true ]]; then
@@ -80,33 +68,48 @@ mp3chsplt() {
         else
             output_prefix="${formatted_file_num}"
         fi
-
-        # Split and convert to Opus
-        ffmpeg -i "$input_file" -f segment -segment_time 300 -reset_timestamps 1 -threads 1 -map_metadata -1 -map_chapters -1 -map 0:a -c:a libopus -b:a "$bitrate" "${output_prefix}-%03d.opus" -y
-
-        if [[ $? -ne 0 ]]; then
-            echo "Error: Failed to process $input_file"
-            return 1
+        
+        # Get duration of the file in seconds
+        local duration
+        duration=$(ffprobe -v quiet -show_entries format=duration -of csv=p=0 "$input_file" 2>/dev/null)
+        
+        # Check if duration is valid and convert to integer
+        if [[ -n "$duration" ]] && [[ "$duration" =~ ^[0-9]+(\.[0-9]+)?$ ]]; then
+            local duration_int=${duration%.*}  # Remove decimal part
+            
+            if [[ $duration_int -le 300 ]]; then
+                # File is 5 minutes or less, just rename it
+                echo "File is ${duration_int}s (≤5min), renaming instead of splitting..."
+                ffmpeg -i "$input_file" -map_metadata -1 -map_chapters -1 -write_id3v2 0 -map 0:a -c copy "${output_prefix}.mp3"
+                if [[ $? -eq 0 ]]; then
+                    rm "$input_file"
+                else
+                    echo "Error: Failed to process $input_file"
+                    return 1
+                fi
+            else
+                # File is longer than 5 minutes, split it
+                echo "File is ${duration_int}s (>5min), splitting into segments..."
+                ffmpeg -i "$input_file" -f segment -segment_time 300 -map_metadata -1 -map_chapters -1 -write_id3v2 0 -map 0:a -c copy "${output_prefix}-%03d.mp3"
+                
+                if [[ $? -eq 0 ]]; then
+                    rm "$input_file"
+                else
+                    echo "Error: Failed to process $input_file"
+                    return 1
+                fi
+            fi
+        else
+            echo "Warning: Could not determine duration for $input_file, skipping..."
+            continue
         fi
 
-        # Count resulting files
-        local file_count
-        file_count=$(find . -maxdepth 1 -name "${output_prefix}-*.opus" -type f | wc -l)
-
-        if [[ $file_count -eq 1 ]]; then
-            # Only one segment, remove the suffix
-            local segment_file
-            segment_file=$(find . -maxdepth 1 -name "${output_prefix}-*.opus" -type f -print -quit)
-            mv "$segment_file" "${output_prefix}.opus"
-        fi
-
-        rm "$input_file"
         echo "Successfully processed $input_file"
-
+        
         ((file_num++))
     done
-
-    # Clean up any non-Opus files
-    find . -maxdepth 1 -type f ! -name "*.opus" -delete
+    
+    # Clean up any non-MP3 files
+    find . -maxdepth 1 -type f ! -name "*.mp3" -delete
     echo "All conversions completed successfully!"
 }

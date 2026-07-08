@@ -43,3 +43,6 @@ alias odoo-shell='./odoo17/odoo-bin shell -c ./odoo17/odoo.conf'
 
 #dotfiles
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# bitwarden/vaultwarden client
+alias bwp="rbw list | fzf | xargs rbw get"
