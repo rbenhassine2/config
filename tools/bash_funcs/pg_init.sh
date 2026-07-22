@@ -23,11 +23,11 @@ lc_monetary='en_US.UTF-8'
 lc_numeric='en_US.UTF-8'
 lc_time='en_US.UTF-8'
 default_text_search_config='pg_catalog.english'
-shared_buffers = 6GB
-temp_buffers = 256MB
-work_mem = 64MB
-maintenance_work_mem = 2GB
-vacuum_buffer_usage_limit = 2GB
+shared_buffers = 1GB
+temp_buffers = 32MB
+work_mem = 16MB
+maintenance_work_mem = 256MB
+vacuum_buffer_usage_limit = 256MB
 log_destination = 'stderr'
 logging_collector = on
 # Store logs in the 'log' subdirectory of the data directory
@@ -35,10 +35,10 @@ log_directory = 'log'
 log_filename = 'postgresql-%Y-%m-%d_%H%M%S.log'
 log_statement = 'all'
 checkpoint_timeout=1h
-effective_cache_size = 24GB
-wal_buffers = 64MB
-max_worker_processes = 12
-max_parallel_maintenance_workers = 6
+effective_cache_size = 3GB
+wal_buffers = 16MB
+max_worker_processes = 8
+max_parallel_maintenance_workers = 2
 
 # Debugging & Logging optimizations
 log_min_duration_statement = 0
@@ -52,8 +52,8 @@ effective_io_concurrency = 200
 jit = off
 
 # Parallelism tuning
-max_parallel_workers_per_gather = 4
-max_parallel_workers = 8
+max_parallel_workers_per_gather = 2
+max_parallel_workers = 4
 EOF
   pg_start
 }
