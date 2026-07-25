@@ -228,3 +228,5 @@ fi
 
 bind 'set completion-ignore-case on'
 export SSL_CERT_DIR="$HOME/.aspnet/dev-certs/trust:/usr/lib/ssl/certs"
+
+complete -r docker
