@@ -1,5 +1,5 @@
 #docker
-alias docker='sudo docker'
+#alias docker='sudo docker'
 #generic aliases
 alias acpy='source .venv/bin/activate'
 alias vacpy='source venv/bin/activate'
