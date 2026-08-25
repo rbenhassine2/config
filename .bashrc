@@ -227,4 +227,7 @@ if [ -d "$HOME/tools/bash_funcs" ]; then
 fi
 
 bind 'set completion-ignore-case on'
-export SSL_CERT_DIR="$HOME/.aspnet/dev-certs/trust:/usr/lib/ssl/certs"
+
+# Added by Antigravity CLI installer
+export PATH="/home/raouf/.local/bin:$PATH"
+export PATH="/opt/nvim/bin/:$PATH"

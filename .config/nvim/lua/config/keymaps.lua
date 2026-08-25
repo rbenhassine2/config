@@ -2,6 +2,13 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- nvim 0.12+ removed the nvim-lspconfig `:Lsp*` commands in favor of the
+-- builtin `:lsp` command. Keep the old command names working.
+vim.api.nvim_create_user_command("LspInfo", "checkhealth vim.lsp", { desc = "LSP info" })
+vim.api.nvim_create_user_command("LspRestart", "lsp restart", { bang = true, desc = "Restart LSP client(s)" })
+vim.api.nvim_create_user_command("LspStart", "lsp enable", { desc = "Enable and launch a language server" })
+vim.api.nvim_create_user_command("LspStop", "lsp stop", { bang = true, desc = "Stop LSP client(s)" })
+
 vim.keymap.set("n", "<leader>cp", function()
   vim.fn.setreg("+", vim.fn.expand("%:"))
   vim.notify("Copied: " .. vim.fn.expand("%:"))
