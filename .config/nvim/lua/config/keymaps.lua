@@ -10,9 +10,15 @@ vim.api.nvim_create_user_command("LspStart", "lsp enable", { desc = "Enable and 
 vim.api.nvim_create_user_command("LspStop", "lsp stop", { bang = true, desc = "Stop LSP client(s)" })
 
 vim.keymap.set("n", "<leader>cp", function()
-  vim.fn.setreg("+", vim.fn.expand("%:"))
-  vim.notify("Copied: " .. vim.fn.expand("%:"))
-end, { desc = "Copy relative file path" })
+  local file = vim.api.nvim_buf_get_name(0)
+  if file == "" then
+    return vim.notify("No file name", "warn")
+  end
+  local root = vim.fs.root(0, ".git") or vim.fs.root(0, ".gitignore") or vim.fn.getcwd()
+  local rel = vim.fs.relpath(root, file) or file
+  vim.fn.setreg("+", rel)
+  vim.notify("Copied: " .. rel)
+end, { desc = "Copy path relative to project root" })
 
 vim.keymap.set("n", "<leader>cP", function()
   vim.fn.setreg("+", vim.fn.expand("%:p"))
