@@ -20,7 +20,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # install dependencies
-sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd -y
+sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd dunst -y
 
 # download and setup config.
 # Copied from https://www.atlassian.com/git/tutorials/dotfiles
@@ -114,3 +114,9 @@ if $install_incus; then
   sudo adduser $USER incus-admin
   newgrp incus-admin
 fi
+
+# enable display watchdog (systemd user service)
+chmod +x "$HOME/.local/bin/displays.sh" "$HOME/.local/bin/display-watch.sh"
+mkdir -p "$HOME/.config/systemd/user"
+systemctl --user daemon-reload
+systemctl --user enable display-watch.service

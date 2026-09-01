@@ -17,3 +17,6 @@ bindsym $mod+o exec nautilus --new-window
 bindsym $mod+Shift+p exec sudo shutdown now
 
 bindsym $mod+p exec --no-startup-id rofi-rbw
+
+bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/displays.sh cycle
+bindsym $mod+Shift+f exec --no-startup-id ~/.local/bin/displays.sh recover
