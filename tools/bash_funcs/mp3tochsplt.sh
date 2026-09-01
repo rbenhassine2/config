@@ -5,6 +5,20 @@ mp3tochsplt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: mp3tochsplt [--dir-name true|false]"
+                echo
+                echo "Split the first .mp3 file in the current directory by its chapters"
+                echo "into chapter_001.mp3, chapter_002.mp3, ... then convert the result"
+                echo "to Opus segments (delegates to mp3chsplt)."
+                echo "Falls back to mp3splt if the file has no chapters."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Passed through to mp3chsplt/mp3splt."
+                echo
+                echo "Requires: ffmpeg, ffprobe, jq."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

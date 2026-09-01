@@ -5,6 +5,20 @@ m4btochsplt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: m4btochsplt [--dir-name true|false]"
+                echo
+                echo "Split the first .m4b file in the current directory by its chapters"
+                echo "into chapter_001.m4b, chapter_002.m4b, ... then convert the result"
+                echo "to MP3 segments (delegates to m4bchsplt)."
+                echo "Falls back to m4bsplt if the file has no chapters."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Passed through to m4bchsplt/m4bsplt."
+                echo
+                echo "Requires: ffmpeg, ffprobe, jq."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

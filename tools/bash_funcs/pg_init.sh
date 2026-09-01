@@ -1,4 +1,17 @@
 pg_init() {
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo "Usage: pg_init"
+    echo
+    echo "Recreate the local dev PostgreSQL cluster under ~/pg/server."
+    echo "Stops the server, removes the data directory, runs initdb with trust auth,"
+    echo "writes a tuned postgresql.conf (NVMe, logging, parallelism, ...), and starts"
+    echo "it again via pg_start."
+    echo
+    echo "WARNING: destroys all data in the current cluster at ~/pg/server."
+    echo "Server runs on port 45000, unix socket in /home/atp/pg/server."
+    return 0
+  fi
+
   pg_ctl stop -D ~/pg/server >/dev/null 2>&1
   rm -rf ~/pg/server >/dev/null 2>&1
   mkdir -p ~/pg/server >/dev/null 2>&1

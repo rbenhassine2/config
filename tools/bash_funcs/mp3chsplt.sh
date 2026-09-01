@@ -8,6 +8,23 @@ mp3chsplt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: mp3chsplt [--dir-name true|false] [--bitrate <bitrate>]"
+                echo
+                echo "Convert every .mp3 file in the current directory to Opus"
+                echo "(libopus), split into 5-minute segments named"
+                echo "<prefix>-001.opus, ... (a single segment drops the -001)."
+                echo "Original .mp3 files are removed on success."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Prefix outputs with the current"
+                echo "                          directory name (default: false)."
+                echo "  --bitrate <bitrate>     Opus bitrate, e.g. 46k, 64k, 128k"
+                echo "                          (default: 46k)."
+                echo
+                echo "Requires: ffmpeg."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

@@ -14,6 +14,22 @@ mp3splt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: mp3splt [--dir-name true|false] [--bitrate <bitrate>]"
+                echo
+                echo "Convert the first .mp3 file in the current directory to Opus,"
+                echo "split into 5-minute segments (000.opus, 001.opus, ...)."
+                echo "Removes the original file on success."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Prefix segments with the current"
+                echo "                          directory name (default: false)."
+                echo "  --bitrate <bitrate>     Opus bitrate, e.g. 46k, 64k, 128k"
+                echo "                          (default: 46k)."
+                echo
+                echo "Requires: ffmpeg."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

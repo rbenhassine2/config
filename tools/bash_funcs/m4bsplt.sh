@@ -6,6 +6,20 @@ m4bsplt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: m4bsplt [--dir-name true|false]"
+                echo
+                echo "Convert the first .m4b file in the current directory to MP3,"
+                echo "split into 5-minute segments (000.mp3, 001.mp3, ...)."
+                echo "Removes non-MP3 files in the directory on success."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Prefix segments with the current"
+                echo "                          directory name (default: false)."
+                echo
+                echo "Requires: ffmpeg."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

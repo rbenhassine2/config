@@ -5,6 +5,30 @@ pglog() {
   local logfile="${PGLOG_FILE:-}"
 
   case "$action" in
+    --help|-h)
+      echo "Usage: pglog {on|off|status|tail|grep} <db> [pattern]"
+      echo
+      echo "Toggle and read PostgreSQL statement logging for a database."
+      echo "Logs live under /var/log/postgresql (root-owned; sudo is used)."
+      echo
+      echo "Commands:"
+      echo "  on <db>          Set log_statement=all on the database (new connections"
+      echo "                   only; existing sessions must reconnect)."
+      echo "  off <db>         Set log_statement=none."
+      echo "  status <db>      Show the current log_statement setting."
+      echo "  tail <db> [pat]  Live-follow the postgres log, keeping only lines from"
+      echo "                   that database (and matching [pat] if given)."
+      echo "  grep <db> [pat]  Search all rotated log files for that database;"
+      echo "                   default pattern is ERROR."
+      echo
+      echo "Environment:"
+      echo "  PGLOG_FILE       Override the postgres log file path."
+      echo
+      echo "Example:"
+      echo "  pglog on mydb"
+      echo "  pglog grep mydb 'ERROR' | tail -n 1"
+      return 0
+      ;;
     on|off)
       [ -z "$db" ] && { echo "usage: pglog $action <db>"; return 1; }
       local val="all"; [ "$action" = "off" ] && val="none"

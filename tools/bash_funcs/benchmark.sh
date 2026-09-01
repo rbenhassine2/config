@@ -1,4 +1,20 @@
 benchmark() {
+    if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+        echo "Usage: benchmark <command> [iterations]"
+        echo
+        echo "Time a shell command over N runs and print per-run timings plus"
+        echo "average, min, max and range statistics."
+        echo
+        echo "Arguments:"
+        echo "  command      The shell command to benchmark (quoted if it has spaces)."
+        echo "  iterations   Number of runs (default: 10)."
+        echo
+        echo "Examples:"
+        echo "  benchmark 'curl -s http://localhost:8069' 5"
+        echo "  benchmark 'python script.py' 20"
+        return 0
+    fi
+
     local cmd="$1"
     local iterations="${2:-10}"
     declare -a times

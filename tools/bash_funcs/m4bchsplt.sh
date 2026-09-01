@@ -7,6 +7,21 @@ m4bchsplt() {
     # Parse flags
     while [[ $# -gt 0 ]]; do
         case $1 in
+            --help|-h)
+                echo "Usage: m4bchsplt [--dir-name true|false]"
+                echo
+                echo "Convert every .m4b file in the current directory to MP3."
+                echo "Files ≤5 minutes are renamed to MP3; longer files are split into"
+                echo "5-minute segments (segments named <prefix>-001.mp3, ...)."
+                echo "Original .m4b files are removed on success."
+                echo
+                echo "Options:"
+                echo "  --dir-name true|false   Prefix output files with the current"
+                echo "                          directory name (default: false)."
+                echo
+                echo "Requires: ffmpeg, ffprobe."
+                return 0
+                ;;
             --dir-name)
                 shift
                 if [[ "$1" == "true" || "$1" == "false" ]]; then

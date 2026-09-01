@@ -1,4 +1,28 @@
 odoolog() {
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    echo "Usage: odoolog {on|off|level|handler|show|clear|tail|grep} [value]"
+    echo
+    echo "Toggle and read Odoo logging for the nearest project. The odoo.conf is"
+    echo "located by walking up from the current directory; edits only the"
+    echo "log_level and log_handler lines. Changes apply after restarting Odoo."
+    echo
+    echo "Commands:"
+    echo "  on                Set log_level = debug (verbose)."
+    echo "  off               Set log_level = info (quiet)."
+    echo "  level <lvl>       Set log_level: debug|info|warn|error|critical."
+    echo "  handler '<expr>'  Set log_handler, e.g. 'odoo.addons.sale:DEBUG'"
+    echo "                    for per-module debug without the full flood."
+    echo "  show              Print the conf path, level, handler and logfile."
+    echo "  clear             Truncate the log file (fresh log on next start)."
+    echo "  tail [pattern]    Live-follow the log (less +F); filter by pattern."
+    echo "  grep [pattern]    Search the log (default pattern: ERROR)."
+    echo
+    echo "Environment:"
+    echo "  ODOO_CONF         Override the odoo.conf path."
+    echo "  ODOO_LOG          Override the log file path."
+    return 0
+  fi
+
   local conf="${ODOO_CONF:-}"
   local action="${1:-}"
   local val="${2:-}"
