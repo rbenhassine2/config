@@ -120,7 +120,7 @@ uv tool install autotiling
 
 # enable display watchdog (systemd user service)
 chmod +x "$HOME/.local/bin/displays.sh" "$HOME/.local/bin/display-watch.sh"
-chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh"
+chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh" "$HOME/.local/bin/boot-display.sh"
 mkdir -p "$HOME/.config/systemd/user"
 systemctl --user daemon-reload
 systemctl --user enable display-watch.service
