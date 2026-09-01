@@ -56,8 +56,8 @@ bindsym $mod+Shift+q kill
 
 # application launchers (rofi)
 bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+bracketright exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window
-bindsym $mod+bracketright exec --no-startup-id rofi -show run
 bindsym $mod+period exec --no-startup-id rofi -show emoji
 
 # change focus
