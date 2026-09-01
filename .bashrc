@@ -231,3 +231,5 @@ bind 'set completion-ignore-case on'
 # Added by Antigravity CLI installer
 export PATH="/home/raouf/.local/bin:$PATH"
 export PATH="/opt/nvim/bin/:$PATH"
+
+umask 002
