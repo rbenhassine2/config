@@ -20,7 +20,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # install dependencies
-sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd dunst polybar autorandr rofi picom i3lock feh -y
+sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd dunst polybar autorandr rofi picom i3lock feh copyq redshift blueman -y
 
 # download and setup config.
 # Copied from https://www.atlassian.com/git/tutorials/dotfiles

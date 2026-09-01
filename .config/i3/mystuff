@@ -4,6 +4,15 @@ exec --no-startup-id picom --config ~/.config/picom/picom.conf
 # Notifications
 exec --no-startup-id dunst
 
+# Clipboard manager
+exec --no-startup-id copyq
+
+# Bluetooth tray applet
+exec --no-startup-id blueman-applet
+
+# Idle lock: X screensaver activates after 300s -> xss-lock shows i3lock; DPMS at 600s
+exec --no-startup-id sh -c 'xset s 300; xset s blank; xset dpms 600 600 600'
+
 # Status bar (polybar, follows the primary monitor)
 exec --no-startup-id ~/.local/bin/polybar-launch.sh
 
@@ -27,12 +36,24 @@ assign [class="Brave-browser"] "1:  Brave"
 assign [class="Netsoft-com.netsoft.hubstaff"] "10:  Work"
 
 gaps inner 5px
+gaps outer 5px
+
+# Floating rules for popups
+for_window [class="1Password"] floating enable
+for_window [class="nm-connection-editor"] floating enable
+for_window [class="(?i)pinentry"] floating enable
 
 bindsym $mod+slash exec scrot -s ~/Pictures/screenshot_%Y-%m-%d_%H-%M-%S.png
 bindsym $mod+o exec nautilus --new-window
 bindsym $mod+Shift+p exec sudo shutdown now
 
 bindsym $mod+p exec --no-startup-id rofi-rbw
+
+# Clipboard history
+bindsym $mod+Shift+v exec --no-startup-id copyq show
+
+# Night light toggle
+bindsym $mod+Shift+t exec --no-startup-id ~/.local/bin/nightlight.sh toggle
 
 # Display switcher
 bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/displays.sh cycle

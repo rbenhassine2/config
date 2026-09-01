@@ -35,10 +35,10 @@ exec --no-startup-id nm-applet
 # Screen lock on suspend + manual lock binding (see mystuff for lock bindings).
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# Use pactl to adjust volume in PulseAudio.
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+# Use pactl to adjust volume in PulseAudio (with OSD notifications).
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.local/bin/volume.sh up
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.local/bin/volume.sh down
+bindsym XF86AudioMute exec --no-startup-id ~/.local/bin/volume.sh mute
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -58,6 +58,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 bindsym $mod+bracketright exec --no-startup-id rofi -show run
+bindsym $mod+period exec --no-startup-id rofi -show emoji
 
 # change focus
 bindsym $mod+j focus left
