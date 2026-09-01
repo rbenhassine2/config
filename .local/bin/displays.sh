@@ -38,6 +38,13 @@ geom_of() {
   xrandr --query 2>/dev/null | grep "^${1} connected" | grep -oE '[0-9]+x[0-9]+\+[0-9]+\+[0-9]+' | head -n1
 }
 
+restart_bar() {
+  if [ -x "$HOME/.local/bin/polybar-launch.sh" ]; then
+    nohup "$HOME/.local/bin/polybar-launch.sh" >/dev/null 2>&1 &
+    disown 2>/dev/null || true
+  fi
+}
+
 current_state() {
   local ia=0 ea=0
   [ -n "$internal" ] && output_active "$internal" && ia=1
@@ -69,6 +76,7 @@ switch_to_external() {
   xrandr --output "$external" --auto --primary
   [ -n "$internal" ] && xrandr --output "$internal" --off
   notify "Display: external"
+  restart_bar
 }
 
 switch_to_internal() {
@@ -79,6 +87,7 @@ switch_to_internal() {
   xrandr --output "$internal" --auto --primary
   [ -n "$external" ] && xrandr --output "$external" --off
   notify "Display: internal"
+  restart_bar
 }
 
 switch_to_mirror() {
@@ -88,6 +97,7 @@ switch_to_mirror() {
   fi
   xrandr --output "$external" --primary --auto --output "$internal" --auto --same-as "$external"
   notify "Display: mirror"
+  restart_bar
 }
 
 switch_to_extended() {
@@ -97,6 +107,7 @@ switch_to_extended() {
   fi
   xrandr --output "$external" --primary --auto --output "$internal" --auto --right-of "$external"
   notify "Display: extended"
+  restart_bar
 }
 
 recover_internal() {
@@ -107,6 +118,7 @@ recover_internal() {
   xrandr --output "$internal" --auto --primary
   [ -n "$external" ] && xrandr --output "$external" --off
   notify "Recovery: internal screen enabled. If the lid is closed, open it."
+  restart_bar
 }
 
 case "${1:-}" in

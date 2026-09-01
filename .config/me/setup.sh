@@ -20,7 +20,7 @@ sudo apt update
 sudo apt upgrade -y
 
 # install dependencies
-sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd dunst -y
+sudo apt install jq git curl wget gawk build-essential ca-certificates btop ffmpeg zstd dunst polybar autorandr rofi picom i3lock feh -y
 
 # download and setup config.
 # Copied from https://www.atlassian.com/git/tutorials/dotfiles
@@ -115,8 +115,12 @@ if $install_incus; then
   newgrp incus-admin
 fi
 
+# install autotiling (auto split orientation for i3)
+uv tool install autotiling
+
 # enable display watchdog (systemd user service)
 chmod +x "$HOME/.local/bin/displays.sh" "$HOME/.local/bin/display-watch.sh"
+chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh"
 mkdir -p "$HOME/.config/systemd/user"
 systemctl --user daemon-reload
 systemctl --user enable display-watch.service

@@ -1,14 +1,30 @@
-# Start PolicyKit authentication agent
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# Compositor (transparency, shadows, rounded corners)
+exec --no-startup-id picom --config ~/.config/picom/picom.conf
+
+# Notifications
 exec --no-startup-id dunst
+
+# Status bar (polybar, follows the primary monitor)
+exec --no-startup-id ~/.local/bin/polybar-launch.sh
+
+# Wallpaper
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpapers/onedark.png
+
+# Auto-tiling: pick split orientation from window dimensions
+exec --no-startup-id ~/.local/bin/autotiling
 
 exec --no-startup-id google-chrome
 exec --no-startup-id brave-browser
 
+# Scratchpad terminal (toggles with $mod+Escape)
+for_window [class="scratchpad"] move scratchpad
+exec --no-startup-id kitty --class scratchpad
+bindsym $mod+Escape scratchpad show
+bindsym $mod+Shift+Escape move scratchpad
 
-assign [class="Google-chrome"] 2
-assign [class="Brave-browser"] 1
-assign [class="Netsoft-com.netsoft.hubstaff"] 10
+assign [class="Google-chrome"] "2:  Chrome"
+assign [class="Brave-browser"] "1:  Brave"
+assign [class="Netsoft-com.netsoft.hubstaff"] "10:  Work"
 
 gaps inner 5px
 
@@ -18,5 +34,10 @@ bindsym $mod+Shift+p exec sudo shutdown now
 
 bindsym $mod+p exec --no-startup-id rofi-rbw
 
+# Display switcher
 bindsym $mod+Shift+d exec --no-startup-id ~/.local/bin/displays.sh cycle
 bindsym $mod+Shift+f exec --no-startup-id ~/.local/bin/displays.sh recover
+
+# Lock / power menu
+bindsym $mod+Shift+x exec --no-startup-id i3lock -c 282c34 -u
+bindsym $mod+x exec --no-startup-id ~/.local/bin/system-menu.sh

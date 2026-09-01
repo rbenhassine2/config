@@ -1,0 +1,96 @@
+* {
+    background:     #282c34;
+    background-alt: #2f3542;
+    foreground:     #abb2bf;
+    foreground-alt: #dfe1e8;
+    selected:       #61afef;
+    selected-fg:    #282c34;
+    urgent:         #e06c75;
+    border:         0px;
+    text-color:     @foreground;
+    width:          60ch;
+    padding:        6px;
+    spacing:        4px;
+    font:           "Hurmit Nerd Font Mono 11";
+}
+
+window {
+    background-color: @background;
+    border:           1px;
+    border-color:     #3b4252;
+    border-radius:    8px;
+}
+
+inputbar {
+    background-color: @background-alt;
+    border-radius:    6px;
+    margin:           6px 6px 4px 6px;
+    padding:          6px 8px;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    text-color:       @selected;
+    padding:          0 4px 0 0;
+}
+
+entry {
+    text-color:           @foreground;
+    placeholder-color:    #5c6370;
+    cursor-color:         @selected;
+}
+
+listview {
+    background-color: @background;
+    lines:            12;
+    columns:          1;
+    spacing:          2px;
+    padding:          2px 6px 6px 6px;
+}
+
+element {
+    background-color: transparent;
+    padding:          4px 8px;
+    border-radius:    6px;
+}
+
+element selected {
+    background-color: @selected;
+    text-color:       @selected-fg;
+}
+
+element normal {
+    text-color: @foreground;
+}
+
+element alternate {
+    background-color: transparent;
+}
+
+element-text {
+    text-color:       @foreground;
+    margin:           0 6px;
+}
+
+element-text selected {
+    text-color: @selected-fg;
+}
+
+element-icon {
+    size: 1.2em;
+}
+
+message {
+    background-color: @background-alt;
+    border-radius:    6px;
+    margin:           4px 6px 6px 6px;
+    padding:          4px;
+}
+
+error-message {
+    background-color: @background-alt;
+    border-radius:    6px;
+    margin:           4px 6px 6px 6px;
+    padding:          4px;
+    text-color:       @urgent;
+}

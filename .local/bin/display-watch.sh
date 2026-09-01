@@ -18,6 +18,13 @@ notify() {
   return 0
 }
 
+restart_bar() {
+  if [ -x "$HOME/.local/bin/polybar-launch.sh" ]; then
+    nohup "$HOME/.local/bin/polybar-launch.sh" >/dev/null 2>&1 &
+    disown 2>/dev/null || true
+  fi
+}
+
 find_outputs() {
   local out
   internal=""
@@ -63,12 +70,14 @@ while true; do
       xrandr --output "$internal" --auto --primary 2>/dev/null
       [ -n "$external" ] && xrandr --output "$external" --off 2>/dev/null
       notify "External display lost. Internal screen enabled - open the lid if closed."
+      restart_bar
     fi
   elif [ "$ext_active" = 1 ] && [ "$int_active" = 1 ] && [ -e "$state_file" ]; then
     rm -f "$state_file"
     xrandr --output "$external" --auto --primary 2>/dev/null
     xrandr --output "$internal" --off 2>/dev/null
     notify "External display restored."
+    restart_bar
   fi
 
   sleep 2
