@@ -42,13 +42,20 @@ odoolog() {
       [ -z "$val" ] && val="ERROR"
       grep -n "$val" "$logfile"
       ;;
+    clear)
+      [ -z "$logfile" ] && { echo "no logfile in conf (override with ODOO_LOG)"; return 1; }
+      mkdir -p "$(dirname "$logfile")"
+      : > "$logfile"
+      echo "odoolog: truncated $logfile"
+      ;;
     *)
-      echo "usage: odoolog {on|off|level|handler|show|tail|grep} [value]"
+      echo "usage: odoolog {on|off|level|handler|show|clear|tail|grep} [value]"
       echo "  on                set log_level = debug"
       echo "  off               set log_level = info"
       echo "  level <lvl>       set log_level (debug|info|warn|error|critical)"
       echo "  handler '<expr>'  set log_handler, e.g. 'odoo.addons.sale:DEBUG'"
       echo "  show              print conf path, level, handler, logfile"
+      echo "  clear             truncate the log file"
       echo "  tail [pattern]    live-follow the log (less +F), filter if pattern given"
       echo "  grep [pattern]    search the log (default ERROR)"
       ;;
