@@ -40,6 +40,10 @@ fi
 config checkout
 config config status.showUntrackedFiles no
 
+# Keep README + wiki out of $HOME (tracked in repo, visible on GitHub)
+config update-index --skip-worktree README.md $(config ls-files 'wiki/*')
+rm -rf $HOME/README.md $HOME/wiki
+
 # install bashit
 # Copied from https://github.com/bash-it/bash-it#installation
 git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
@@ -120,7 +124,7 @@ uv tool install autotiling
 
 # enable display watchdog (systemd user service)
 chmod +x "$HOME/.local/bin/displays.sh" "$HOME/.local/bin/display-watch.sh"
-chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh" "$HOME/.local/bin/boot-display.sh"
+chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh" "$HOME/.local/bin/boot-display.sh" "$HOME/.local/bin/docs-edit.sh"
 mkdir -p "$HOME/.config/systemd/user"
 systemctl --user daemon-reload
 systemctl --user enable display-watch.service
