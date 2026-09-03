@@ -85,7 +85,7 @@ parallelism, JIT off), and starts the server again with `pg_start`.
 Toggle and read PostgreSQL statement logging for a database.
 
 ```
-pglog {on|off|status|tail|grep} <db> [pattern]
+pglog {on|off|status|truncate|tail|grep} <db> [pattern]
 ```
 
 | Command          | Description |
@@ -93,6 +93,7 @@ pglog {on|off|status|tail|grep} <db> [pattern]
 | `on <db>`        | Set `log_statement=all` (applies to new connections; existing sessions must reconnect) |
 | `off <db>`       | Set `log_statement=none` |
 | `status <db>`    | Show the current `log_statement` setting |
+| `truncate`       | Empty the active postgres log in place; the running server keeps appending (no restart needed) |
 | `tail <db> [pat]`| Live-follow the postgres log, keeping only that database's lines (optionally matching `[pat]`) |
 | `grep <db> [pat]`| Search all rotated log files for that database (default pattern: `ERROR`) |
 
@@ -102,7 +103,12 @@ log path with the `PGLOG_FILE` environment variable.
 ```
 $ pglog on mydb
 $ pglog grep mydb 'ERROR' | tail -n 1
+$ pglog truncate
 ```
+
+`truncate` empties the currently-active log file in place (`truncate -s 0`), so
+Postgres keeps writing to the same file without a restart. Only the active log
+is affected; rotated `*.log.1` files are left intact.
 
 ---
 

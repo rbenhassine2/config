@@ -56,7 +56,7 @@ odoolog() {
     tail)
       [ -z "$logfile" ] && { echo "no logfile in conf (override with ODOO_LOG)"; return 1; }
       if [ -n "$val" ]; then
-        tail -F "$logfile" | grep --line-buffered "$val"
+        tail -F "$logfile" | grep --line-buffered "$val" | less +F
       else
         exec less +F "$logfile"
       fi

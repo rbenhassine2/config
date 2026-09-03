@@ -6,7 +6,7 @@ pglog() {
 
   case "$action" in
     --help|-h)
-      echo "Usage: pglog {on|off|status|tail|grep} <db> [pattern]"
+      echo "Usage: pglog {on|off|status|truncate|tail|grep} <db> [pattern]"
       echo
       echo "Toggle and read PostgreSQL statement logging for a database."
       echo "Logs live under /var/log/postgresql (root-owned; sudo is used)."
@@ -16,6 +16,8 @@ pglog() {
       echo "                   only; existing sessions must reconnect)."
       echo "  off <db>         Set log_statement=none."
       echo "  status <db>      Show the current log_statement setting."
+      echo "  truncate         Empty the active postgres log in place; the running"
+      echo "                   server keeps appending (no restart needed)."
       echo "  tail <db> [pat]  Live-follow the postgres log, keeping only lines from"
       echo "                   that database (and matching [pat] if given)."
       echo "  grep <db> [pat]  Search all rotated log files for that database;"
@@ -38,6 +40,14 @@ pglog() {
     status)
       [ -z "$db" ] && { echo "usage: pglog status <db>"; return 1; }
       sudo -u postgres psql -d "$db" -tAc "SHOW log_statement;"
+      ;;
+    truncate)
+      [ -z "$logfile" ] && logfile="$(pg_log_file)"
+      [ -z "$logfile" ] && { echo "could not locate postgres log file (override with PGLOG_FILE)"; return 1; }
+      local owner; owner="$(sudo stat -c '%U' "$logfile")"
+      [ -z "$owner" ] && owner=postgres
+      sudo -u "$owner" truncate -s 0 "$logfile" || { echo "failed to truncate $logfile" >&2; return 1; }
+      echo "truncated $logfile (server keeps appending; no restart needed)"
       ;;
     tail|grep)
       [ -z "$db" ] && { echo "usage: pglog $action <db> [pattern]"; return 1; }
@@ -66,7 +76,7 @@ pglog() {
       fi
       ;;
     *)
-      echo "usage: pglog {on|off|status|tail|grep} <db> [pattern]"
+      echo "usage: pglog {on|off|status|truncate|tail|grep} <db> [pattern]"
       ;;
   esac
 }
