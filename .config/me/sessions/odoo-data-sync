@@ -5,3 +5,4 @@ window ods-nvim-ds2 ods-nvim-ds2 ~/src/datasync2 acpy && nvim .
 window ods-nvim-osm ods-nvim-osm ~/src/odoo-sales-modules acpy && nvim .
 window ods-ds2 ods-ds2 ~/src/datasync2 acpy 
 window ods-osm ods-osm ~/src/odoo-sales-modules acpy
+window ods-srv-odoo ods-srv-odoo host=ubuntu@198.46.86.181 key=~/Documents/sshkeys/stg_hq ~/datasync2 acpy

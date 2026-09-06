@@ -47,6 +47,11 @@ Workspace: by default windows open on a workspace named after the session.
 Set ws=<number> or ws=<name> (e.g. ws=11:  Odoo) in the session config to pick
 the i3 workspace.
 
+Hosts: each session config can set host= and key= for all windows, and any
+single window line can override them with inline host=... key=... tokens:
+  window <label> <tmux> host=user@host key=~/path ~/proj nvim
+Precedence: window token > --host/--key > session host=/key= > defaults.
+
 Completion: <session> tab-completes from ~/.config/me/sessions/*.
 EOF
 }
@@ -64,17 +69,21 @@ _rejoin_validate_name() {
 }
 
 # _rejoin_load <file>  populates _REJOIN_HOST/_REJOIN_KEY/_REJOIN_WS and the
-# _REJOIN_W_* arrays (label / tmux-session / cwd / cmd). Config syntax:
+# _REJOIN_W_* arrays (label / tmux-session / cwd / cmd / host / key). Config:
 #   host=user@host
 #   key=/path/to/key
 #   ws=11                 i3 workspace number to open the session in
 #   ws=11:  Odoo          ...or an explicit workspace name
 #   window <label> <tmux-session> [cwd|-] [cmd...]
-# 'cmd' is run once, only when the tmux session is freshly created.
+# A single window can override the host/user/key with inline tokens anywhere on
+# its line (they are removed before cwd/cmd are parsed):
+#   window <label> <tmux-session> host=user@host key=~/key [cwd|-] [cmd...]
+# Precedence per window: window token > --host/--key > session host=/key= >
+# script defaults. 'cmd' is run once, only when the tmux session is fresh.
 # Comments must start on their own line with '#'.
 _rejoin_load() {
-  local file=$1 line tokens label tname cwd cmd start
-  local -a tokens
+  local file=$1 line tokens label tname cwd cmd start tok fhost fkey
+  local -a tokens filtered
   _REJOIN_HOST=
   _REJOIN_KEY=
   _REJOIN_WS=
@@ -82,6 +91,8 @@ _rejoin_load() {
   _REJOIN_W_SNAME=()
   _REJOIN_W_CWD=()
   _REJOIN_W_CMD=()
+  _REJOIN_W_HOST=()
+  _REJOIN_W_KEY=()
   while IFS= read -r line || [[ -n $line ]]; do
     [[ $line =~ ^[[:space:]]*(.*)$ ]] && line=${BASH_REMATCH[1]}
     [[ -z $line || $line == '#'* ]] && continue
@@ -91,6 +102,17 @@ _rejoin_load() {
       ws=* | workspace=*) _REJOIN_WS=${line#*=} ;;
       window*)
         read -r -a tokens <<< "${line#window}"
+        fhost=
+        fkey=
+        filtered=()
+        for tok in "${tokens[@]}"; do
+          case $tok in
+            host=*) fhost=${tok#host=} ;;
+            key=*) fkey=${tok#key=} ;;
+            *) filtered+=("$tok") ;;
+          esac
+        done
+        tokens=("${filtered[@]}")
         ((${#tokens[@]} >= 2)) || { echo "rejoin: bad window line: $line" >&2; continue; }
         label=${tokens[0]}
         tname=${tokens[1]}
@@ -108,6 +130,8 @@ _rejoin_load() {
         _REJOIN_W_SNAME+=("$tname")
         _REJOIN_W_CWD+=("$cwd")
         _REJOIN_W_CMD+=("$cmd")
+        _REJOIN_W_HOST+=("$fhost")
+        _REJOIN_W_KEY+=("$fkey")
         ;;
     esac
   done < "$file"
@@ -154,6 +178,8 @@ _rejoin_spawn() {
   local label=$4 tname=$5 cwd=$6 cmd=$7
   local payload b64 rcmd
   local -a sshcmd
+  # local key paths are written as ~/... in configs; expand against $HOME
+  [[ $key == '~/'* ]] && key="$HOME${key:1}"
   payload=$(_rejoin_payload "$tname" "$cwd" "$cmd")
   b64=$(printf '%s' "$payload" | base64 -w0)
   # run the script via bash -c "$( … )" so the payload's stdin stays the ssh
@@ -341,8 +367,12 @@ _rejoin_go() {
 
   local expected=0
   for ((i = 0; i < n; i++)); do
-    echo "rejoin: launching kitty tab '${_REJOIN_W_LABEL[$i]}' -> tmux ${_REJOIN_W_SNAME[$i]}"
-    _rejoin_spawn "$session" "$host" "$key" \
+    local whost wkey
+    # per-window host=/key= override, else the session/CLI/default resolution
+    whost=${_REJOIN_W_HOST[$i]:-$host}
+    wkey=${_REJOIN_W_KEY[$i]:-$key}
+    echo "rejoin: launching kitty tab '${_REJOIN_W_LABEL[$i]}' -> tmux ${_REJOIN_W_SNAME[$i]} (${whost})"
+    _rejoin_spawn "$session" "$whost" "$wkey" \
       "${_REJOIN_W_LABEL[$i]}" "${_REJOIN_W_SNAME[$i]}" \
       "${_REJOIN_W_CWD[$i]}" "${_REJOIN_W_CMD[$i]}"
     ((expected++))
@@ -395,6 +425,9 @@ newsession() {
     echo "#   tmux-session -> tmux session to attach-or-create on the server"
     echo "#   cwd        -> working dir for a freshly created session ('-' to skip)"
     echo "#   cmd        -> run once when the session is first created"
+    echo "#   optional per-window override: add host=user@host and/or key=path"
+    echo "#     tokens anywhere on the window line, e.g.:"
+    echo "#     window <label> <tmux> host=user@host key=~/key [cwd|-] [cmd...]"
     echo "# workspace: ws=<number> or ws=<name> (e.g. ws=11:  Odoo); default: session name"
     echo "host=$host"
     echo "key=$key"

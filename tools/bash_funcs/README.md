@@ -187,14 +187,20 @@ Config syntax (comments must start on their own line):
   `./dev-server.sh`, `tail -f`). It is typed into a real shell pane, so your
   remote `.bashrc` `PATH` applies.
 
+**Per-window host/key:** any single window can connect to a different
+host/user with a different key by adding `host=...` and `key=...` tokens
+anywhere on its line (they are stripped before `cwd`/`cmd` are parsed).
+Precedence for a window: its own `host=`/`key=` > `-H`/`--key` > session
+`host=`/`key=` > the defaults below. Key paths may use `~`.
+
 ```
 # ~/.config/me/sessions/odoo
 host=atp@51.222.241.191
 ws=11:  Odoo
-window editor odoo-nvim ~/projects/odoo nvim
-window run    odoo-run  ~/projects/odoo ./dev-server.sh
-window logs   odoo-log  ~/projects/odoo tail -f ~/projects/odoo/logs/app.log
-window shell  odoo-shell ~/projects/odoo
+window editor     odoo-nvim          ~/projects/odoo nvim
+window staging    odoo-staging       host=ubuntu@10.0.0.20 key=~/keys/staging ~/projects/odoo ./dev-server.sh
+window logs       odoo-log           ~/projects/odoo tail -f ~/projects/odoo/logs/app.log
+window shell      odoo-shell         ~/projects/odoo
 ```
 
 Defaults (override per file or with `-H`/`--key`): host `atp@51.222.241.191`,
