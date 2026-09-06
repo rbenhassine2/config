@@ -1,0 +1,7 @@
+host=atp@51.222.241.191
+ws=4
+window ods-oc ods-oc ~/src/datasync2 acpy && opencode
+window ods-nvim-ds2 ods-nvim-ds2 ~/src/datasync2 acpy && nvim .
+window ods-nvim-osm ods-nvim-osm ~/src/odoo-sales-modules acpy && nvim .
+window ods-ds2 ods-ds2 ~/src/datasync2 acpy 
+window ods-osm ods-osm ~/src/odoo-sales-modules acpy

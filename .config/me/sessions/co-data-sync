@@ -1,0 +1,5 @@
+host=atp@51.222.241.191
+ws=5
+window ds-opencode ods-opencode ~/src/datasync acpy && opencode
+window ds-nvim ds-nvim ~/src/datasync acpy && nvim .
+window ds-bash ds-bash ~/src/datasync acpy

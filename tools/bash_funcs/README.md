@@ -148,6 +148,71 @@ logfile: /home/user/odoo19/logs.log
 
 ---
 
+## Remote sessions
+
+### `rejoin`
+Reopen a remote coding session: switch to the session's own i3 workspace
+(tabbed layout) and open one kitty window per configured "window". Each kitty
+window SSHes to the server and attaches to its tmux session; sessions that do
+not exist yet are created (optionally `cd`'d to a working dir and running a
+startup command once). Re-running `rejoin` replaces the kitty tabs — the tmux
+sessions live on the server, so their state survives.
+
+```
+rejoin                     # list available sessions
+rejoin <session>           # reopen the session
+rejoin -H <user@host> <session>
+rejoin --new <session>     # shorthand for newsession
+rejoin --fg <session>      # run in the foreground (debugging)
+```
+
+Session configs live in `~/.config/me/sessions/<name>`. They are tracked by the
+dotfiles repo, so the same sessions are available on every machine. `<session>`
+tab-completes from that directory.
+
+Config syntax (comments must start on their own line):
+
+| Line                          | Description                                             |
+|-------------------------------|---------------------------------------------------------|
+| `host=user@host`              | Optional SSH destination override                       |
+| `key=/path/to/key`            | Optional SSH key override (blank to use ssh-agent/config) |
+| `ws=<number>` or `ws=<name>`  | i3 workspace to open the session in (default: a workspace named after the session; e.g. `ws=11` or `ws=11:  Odoo`) |
+| `window <label> <tmux> [cwd] [cmd...]` | One kitty/tmux window                      |
+
+- `label` — kitty window title (permanently fixed, so tmux can't overwrite it).
+- `tmux` — tmux session to attach-or-create on the server.
+- `cwd` — working dir for a *freshly created* session; use `-` to give a
+  command without a cwd; omit for neither.
+- `cmd` — run once, only when the session is first created (e.g. `nvim`,
+  `./dev-server.sh`, `tail -f`). It is typed into a real shell pane, so your
+  remote `.bashrc` `PATH` applies.
+
+```
+# ~/.config/me/sessions/odoo
+host=atp@51.222.241.191
+ws=11:  Odoo
+window editor odoo-nvim ~/projects/odoo nvim
+window run    odoo-run  ~/projects/odoo ./dev-server.sh
+window logs   odoo-log  ~/projects/odoo tail -f ~/projects/odoo/logs/app.log
+window shell  odoo-shell ~/projects/odoo
+```
+
+Defaults (override per file or with `-H`/`--key`): host `atp@51.222.241.191`,
+key `~/.ssh/raouf-bhs0806b01c`, plus `ServerAliveInterval=60
+ServerAliveCountMax=3`.
+
+### `newsession`
+Interactively scaffold a session config (prompts for host, then one window at
+a time: label, tmux session, working dir, startup command).
+
+```
+newsession <name>
+```
+
+Requires `kitty` + `i3` on this machine and `tmux` on the remote server.
+
+---
+
 ## Audio splitters
 
 All splitters work on files in the current directory, convert with `ffmpeg`, and
