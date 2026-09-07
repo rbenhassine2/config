@@ -65,3 +65,5 @@ exec --no-startup-id ~/.local/bin/boot-display.sh
 # Lock / power menu
 bindsym $mod+Shift+x exec --no-startup-id i3lock -c 282c34 -u
 bindsym $mod+x exec --no-startup-id ~/.local/bin/system-menu.sh
+
+exec_always --no-startup-id ~/.config/me/theme.sh
