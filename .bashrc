@@ -217,6 +217,7 @@ export PATH=$PATH:$HOME/.opencode/bin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$HOME/tools/cmake/bin:$PATH
 export PATH=$HOME/tools/llvm/bin:$PATH
+export PATH=$HOME/.local/kitty.app/bin
 
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
