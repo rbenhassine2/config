@@ -138,6 +138,23 @@ fi
 # install autotiling (auto split orientation for i3)
 uv tool install autotiling
 
+# Install Brave only on a graphical (non-server) session
+case "${XDG_SESSION_TYPE:-}" in
+x11 | wayland)
+  echo "Graphical session detected, installing Brave."
+  curl -fsS https://dl.brave.com/install.sh | sh
+  ;;
+*)
+  echo "No graphical session detected (${XDG_SESSION_TYPE:-unset}); skipping Brave."
+  ;;
+esac
+
+# Restore tracked shell environment files. uv/rustup/antigravity append their
+# own PATH hooks to ~/.profile and ~/.bashrc; ~/.config/me/env.sh is the single
+# source of truth now, so force the tracked versions back.
+config checkout -- ~/.profile ~/.bashrc
+config checkout -- ~/.config/me/env.sh
+
 # enable display watchdog (systemd user service)
 chmod +x "$HOME/.local/bin/displays.sh" "$HOME/.local/bin/display-watch.sh"
 chmod +x "$HOME/.local/bin/system-menu.sh" "$HOME/.local/bin/polybar-launch.sh" "$HOME/.local/bin/boot-display.sh" "$HOME/.local/bin/docs-edit.sh"

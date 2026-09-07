@@ -197,27 +197,14 @@ TODO="t"
 source "${BASH_IT?}/bash_it.sh"
 source -- ~/.local/share/blesh/ble.sh
 
+# Shared environment (PATH, toolchains) for this shell; also sourced by
+# ~/.profile so login/GUI sessions see the same tools as terminals.
+[ -f "$HOME/.config/me/env.sh" ] && . "$HOME/.config/me/env.sh"
+
+# NVM (interactive only; not loaded by GUI/login sessions)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-. "$HOME/.cargo/env"
-
-# ZVM
-export ZVM_INSTALL="$HOME/.zvm/self"
-export PATH="$PATH:$HOME/.zvm/bin"
-export PATH="$PATH:$ZVM_INSTALL/"
-
-export PATH="$PATH:/usr/lib/postgresql/18/bin"
-export PATH=$PATH:$HOME/go/bin
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:/opt/nvim-linux-x86_64/bin
-
-export PATH=$PATH:$HOME/.opencode/bin
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$HOME/tools/cmake/bin:$PATH
-export PATH=$HOME/tools/llvm/bin:$PATH
-export PATH=$HOME/.local/kitty.app/bin:$PATH
 
 if [ -d "$HOME/tools/bash_funcs" ]; then
   for file in $HOME/tools/bash_funcs/*.sh; do
@@ -228,9 +215,5 @@ if [ -d "$HOME/tools/bash_funcs" ]; then
 fi
 
 bind 'set completion-ignore-case on'
-
-# Added by Antigravity CLI installer
-export PATH="/home/raouf/.local/bin:$PATH"
-export PATH="/opt/nvim/bin/:$PATH"
 
 umask 002
