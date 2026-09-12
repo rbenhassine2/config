@@ -1,10 +1,3 @@
-local toolchain = require("config.toolchain")
-
--- B1 fix: clangd used to be hardcoded to ~/tools/llvm/bin/clangd, which does not
--- exist here. Resolve the real path instead, and fall back to a bare "clangd"
--- so lspconfig can still find it on PATH if resolution ever fails.
-local clangd = toolchain.clangd() or "clangd"
-
 return {
   {
     "neovim/nvim-lspconfig",
@@ -12,14 +5,14 @@ return {
       servers = {
         clangd = {
           cmd = {
-            clangd,
+            vim.fn.expand("~/tools/llvm/bin/clangd"),
             "--background-index",
             "--clang-tidy",
             "--header-insertion=iwyu",
             "--completion-style=detailed",
             "--function-arg-placeholders",
             "--fallback-style=llvm",
-            "--query-driver=" .. toolchain.query_drivers(),
+            "--query-driver=" .. vim.fn.expand("~/tools/llvm/bin/clang++") .. ",/usr/bin/g++,/usr/bin/gcc",
           },
         },
 

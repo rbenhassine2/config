@@ -217,3 +217,10 @@ fi
 bind 'set completion-ignore-case on'
 
 umask 002
+
+# Nim toolchain (choosenim). Also exported from ~/.profile, but interactive
+# non-login shells only read this file. See ~/code/postterm/.llm/plan.md A.1.
+case ":$PATH:" in
+  *":$HOME/.nimble/bin:"*) ;;
+  *) export PATH="$HOME/.nimble/bin:$PATH" ;;
+esac

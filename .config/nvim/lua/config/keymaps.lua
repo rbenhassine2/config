@@ -45,3 +45,7 @@ end
 -- buffers
 vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
+
+-- Postterm project commands (plan step B4): <leader>mb build, <leader>mt test,
+-- <leader>mr run, <leader>mu build with output logged to .llm/build.log.
+require("config.postterm").setup()
