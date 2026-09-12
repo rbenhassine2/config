@@ -1,3 +1,5 @@
+exec --no-startup-id gnome-keyring-daemon --start --components=secrets
+
 # Compositor (transparency, shadows, rounded corners)
 exec --no-startup-id picom --config ~/.config/picom/picom.conf
 
