@@ -4,6 +4,11 @@
 
 vim.g.lazyvim_python_lsp = "pyrefly"
 
+-- Standardize on fzf-lua. Salesforce tooling (xixiaofinland/sf.nvim) is built
+-- around it, and having both fzf-lua and telescope enabled caused the picker
+-- registry to warn and pick inconsistently.
+vim.g.lazyvim_picker = "fzf"
+
 local function has_native_clipboard()
   if vim.fn.has("mac") == 1 then
     return true

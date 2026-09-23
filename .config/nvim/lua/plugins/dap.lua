@@ -4,6 +4,20 @@ local function prompt_program()
   return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 end
 
+--- Nim: prefer an already-built binary so :DapContinue needs no typing.
+--- Falls back to prompting before the first successful build.
+--- Requires the debug profile in config.nims (see plan step B6), which sets
+--- --debugger:native so breakpoints resolve to .nim lines instead of generated C.
+local function nim_program()
+  for _, rel in ipairs({ "build/apps/postterm", "build/postterm", "postterm" }) do
+    local abs = vim.fs.joinpath(vim.fn.getcwd(), rel)
+    if vim.fn.executable(abs) == 1 then
+      return abs
+    end
+  end
+  return prompt_program()
+end
+
 return {
   {
     "mfussenegger/nvim-dap",
@@ -56,7 +70,7 @@ return {
             type = adapter.type,
             request = "launch",
             name = adapter.label,
-            program = prompt_program,
+            program = lang == "nim" and nim_program or prompt_program,
             cwd = "${workspaceFolder}",
           }
           -- gdb's DAP does not use stopOnEntry; lldb and codelldb do.

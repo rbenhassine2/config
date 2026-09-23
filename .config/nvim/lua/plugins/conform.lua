@@ -15,6 +15,9 @@ return {
         xml = { "xmllint" },
         c = { "clang-format" },
         cpp = { "clang-format" },
+        -- Apex uses the project's prettier + prettier-plugin-apex (see
+        -- .prettierrc in the SFDX project).
+        apex = { "prettier_apex" },
       },
     },
     formatters = {
@@ -25,6 +28,16 @@ return {
       },
       ["clang-format"] = {
         command = vim.fn.expand("~/tools/llvm/bin/clang-format"),
+      },
+      prettier_apex = {
+        command = function(_, ctx)
+          return require("config.sf").prettier_bin(ctx.buf)
+        end,
+        cwd = function(_, ctx)
+          return require("config.sf").project_root(ctx.buf)
+        end,
+        args = { "--stdin-filepath", "$FILENAME" },
+        stdin = true,
       },
     },
   },
