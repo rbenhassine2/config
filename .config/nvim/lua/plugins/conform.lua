@@ -15,6 +15,7 @@ return {
         xml = { "xmllint" },
         c = { "clang-format" },
         cpp = { "clang-format" },
+        rust = { "rustfmt" },
         -- Apex uses the project's prettier + prettier-plugin-apex (see
         -- .prettierrc in the SFDX project).
         apex = { "prettier_apex" },

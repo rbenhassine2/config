@@ -63,7 +63,7 @@ return {
 
       -- nim and vala are here because this project targets them; both compile
       -- down to native code, so the same adapters work unchanged.
-      for _, lang in ipairs({ "c", "cpp", "nim", "vala", "zig" }) do
+      for _, lang in ipairs({ "c", "cpp", "rust", "nim", "vala", "zig" }) do
         dap.configurations[lang] = dap.configurations[lang] or {}
         for _, adapter in ipairs(adapters) do
           local config = {
