@@ -42,7 +42,6 @@ return {
         },
         ty = false,
         ruff_lsp = false,
-        fsautocomplete = false,
 
         -- Zig Language Server via zvm
         zls = {
@@ -86,7 +85,7 @@ return {
 
         -- HTML Language Server
         html = {
-          filetypes = { "html", "blade", "htmldjango" },
+          filetypes = { "html", "htmldjango" },
         },
 
         -- CSS Language Server
@@ -104,11 +103,17 @@ return {
         -- Tailwind CSS LSP
         tailwindcss = {
           filetypes = { "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
-          init_options = {
-            userLanguages = {
-              eelixir = "html-eex",
-              eruby = "erb",
-            },
+        },
+
+        -- Emmet
+        emmet_ls = {
+          filetypes = {
+            "html",
+            "css",
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
           },
         },
       },

@@ -33,7 +33,7 @@ return {
     t("const "), i(1, "query"), t(" = useInfiniteQuery({"),
     t({ "", "  queryKey: [" }), i(2, "'query'"), t("],"),
     t({ "", "  queryFn: async ({ pageParam = " }), i(3, "0"), t(" }) => {", ""),
-    t("    const response = await fetch("), i(4, "url"), t("?page=" .. pageParam);"),
+    t("    const response = await fetch("), i(4, "url"), t("?page=${pageParam});"),
     t("    return response.json();"),
     t({ "", "  },", "" }),
     t("  initialPageParam: "), i(5, "0"), t(","),
@@ -96,7 +96,7 @@ return {
 
   s("defineColumn", {
     t("columnHelper.accessor('"), i(1, "field"), t("', {"),
-    t({ "", "  header: '"), i(2, "Header"), t("',", "" }),
+    t({ "", "  header: '" }), i(2, "Header"), t("',"),
     t("  cell: (info) => info.getValue(),"),
     t("})"),
   }),

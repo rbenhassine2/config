@@ -63,6 +63,15 @@ function M.clang_plus_plus()
   })
 end
 
+--- clang-format matching clangd, if present.
+function M.clang_format()
+  return resolve({
+    "~/tools/llvm/bin/clang-format",
+    "/usr/bin/clang-format",
+    mason_bin .. "/clang-format",
+  })
+end
+
 --- Value for clangd's --query-driver, a comma separated compiler list.
 --- gcc matters here: Nim and the GTK code compile through gcc on this box.
 function M.query_drivers()

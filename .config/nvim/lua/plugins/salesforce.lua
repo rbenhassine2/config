@@ -38,19 +38,6 @@ vim.filetype.add({
   },
 })
 
--- `.cls` is also LaTeX's class extension, and TeX tooling (e.g. vimtex) detects
--- it as `tex` via ftdetect, which runs after vim.filetype. Re-map it to `apex`
--- when the file actually lives in a Salesforce DX project.
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "tex",
-  callback = function(args)
-    local name = vim.api.nvim_buf_get_name(args.buf)
-    if name:sub(-4) == ".cls" and sf.project_root(args.buf) then
-      vim.bo[args.buf].filetype = "apex"
-    end
-  end,
-})
-
 -- Aura markup may also be picked up by other ftdetect rules; enforce it inside
 -- an SFDX project (scoped so unrelated .cmp/.app files are untouched).
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead" }, {

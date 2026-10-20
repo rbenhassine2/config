@@ -400,6 +400,26 @@ function M.sf_bin()
   return "sf"
 end
 
+--- Prepend the nvm bin directory holding `sf` to PATH.
+---
+--- sf.nvim invokes a bare `sf` and gates its startup org fetch on
+--- vim.fn.executable("sf"), so a launch that does not inherit nvm's bin dir
+--- silently disables all org functionality. No-op when `sf` already resolves.
+function M.ensure_path()
+  if vim.fn.executable("sf") == 1 then
+    return
+  end
+  local bin = M.sf_bin()
+  if bin == "sf" then
+    return
+  end
+  local dir = vim.fn.fnamemodify(bin, ":h")
+  local path = vim.env.PATH or ""
+  if dir ~= "" and not path:find(dir, 1, true) then
+    vim.env.PATH = dir .. ":" .. path
+  end
+end
+
 --- Root of the Salesforce DX project containing the given buffer (or cwd).
 ---@param bufnr integer|nil
 ---@return string|nil

@@ -46,6 +46,16 @@ end
 vim.keymap.set("n", "<S-Left>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 vim.keymap.set("n", "<S-Right>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
+-- Fold commands raise E490 ("No fold found") when the cursor line is not inside
+-- a fold, which is noisy for accidental presses (and for which-key exploring).
+-- Run them through pcall so they still toggle folds when present and are simply
+-- a no-op otherwise.
+for _, lhs in ipairs({ "za", "zA", "zc", "zC", "zd", "zD", "zo", "zO" }) do
+  vim.keymap.set("n", lhs, function()
+    pcall(vim.cmd, "normal! " .. lhs)
+  end, { desc = "Fold" })
+end
+
 -- Postterm project commands (plan step B4): <leader>mb build, <leader>mt test,
 -- <leader>mr run, <leader>mu build with output logged to .llm/build.log.
 require("config.postterm").setup()

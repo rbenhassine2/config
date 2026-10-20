@@ -57,10 +57,10 @@ return {
     t("    <SelectValue placeholder="), i(1, "'Select option'"), t(" />"),
     t({ "", "  </SelectTrigger>", "" }),
     t("  <SelectContent>"),
-    t({ "", "    <SelectItem value=\""), i(2, "value1"), t("\">" }),
+    t("    <SelectItem value=\""), i(2, "value1"), t("\">"),
     i(3, "Option 1"),
     t({ "", "    </SelectItem>", "" }),
-    t("    <SelectItem value=\""), i(4, "value2"), t("\">" }),
+    t("    <SelectItem value=\""), i(4, "value2"), t("\">"),
     i(5, "Option 2"),
     t({ "", "    </SelectItem>", "" }),
     t("  </SelectContent>"),
@@ -74,7 +74,7 @@ return {
     t("    <TabsTrigger value=\""), i(2, "tab1"), t("\">"),
     i(3, "Tab 1"),
     t("</TabsTrigger>"),
-    t({ "", "    <TabsTrigger value=\""), i(4, "tab2"), t("\">" }),
+    t("    <TabsTrigger value=\""), i(4, "tab2"), t("\">"),
     i(5, "Tab 2"),
     t("</TabsTrigger>"),
     t({ "", "  </TabsList>", "" }),
@@ -168,7 +168,7 @@ return {
   -- Shadcn Avatar
   s("Avatar", {
     t("<Avatar>"),
-    t({ "", "  <AvatarImage src=\""), i(1, "src"), t("\" />", "" }),
+    t("  <AvatarImage src=\""), i(1, "src"), t("\" />"),
     t("  <AvatarFallback>"),
     i(2, "Fallback"),
     t({ "", "  </AvatarFallback>", "" }),
@@ -238,9 +238,9 @@ return {
   -- Shadcn Command
   s("Command", {
     t("<Command>"),
-    t({ "", "  <CommandInput placeholder=\""), i(1, "Search"), t("\" />", "" }),
+    t("  <CommandInput placeholder=\""), i(1, "Search"), t("\" />"),
     t("  <CommandList>"),
-    t({ "", "    <CommandGroup heading=\""), i(2, "Suggestions"), t("\">" }),
+    t("    <CommandGroup heading=\""), i(2, "Suggestions"), t("\">"),
     t({ "", "      <CommandItem>" }),
     i(3, "Item 1"),
     t({ "", "      </CommandItem>", "" }),
